@@ -147,6 +147,63 @@ public class DatabaseConnector{
 		return users;
 	}
 	/**
+	 * sets the delivery price
+	 * @param s
+	 */
+	public static void setDeliveryPrice(String s){
+		try {
+			stmt.executeUpdate("UPDATE settings SET deliver_price ='" + Integer.parseInt(s) + "' WHERE id='1'");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Greide ikke endre leveringspris");
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * sets the delivery pricelimit
+	 * @param s
+	 */
+	public static void setPriceLimit(String s){
+		try {
+			stmt.executeUpdate("UPDATE settings SET deliver_limit ='" + Integer.parseInt(s) + "' WHERE id='1'");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Greide ikke endre prisgrense for gratis levering");
+		}
+	}
+	/**
+	 * returnerer leveringspris
+	 * @return
+	 */
+	public static double getDeliveryPrice(){
+		try {
+			con.setAutoCommit(true);
+			ResultSet rs_del = stmt.executeQuery("SELECT deliver_price FROM settings WHERE id='1'");
+
+			rs_del.first();
+			con.setAutoCommit(false);
+			return Double.parseDouble(rs_del.getString(1));
+
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,	"Greide ikke hente leveringspris fra database");
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	/**
+	 * returnerer prisgrense for gratis levering
+	 * @return
+	 */
+	public static double getPriceLimit(){
+		try {
+			ResultSet rs_del = stmt.executeQuery("SELECT deliver_limit FROM settings WHERE id='1'");
+			rs_del.first();
+			return Double.parseDouble(rs_del.getString(1)); 
+
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,	"Greide ikke hente prisgrense fra database");
+		}
+		return -1;
+	}
+	/**
 	 * 
 	 * @param id
 	 * @return productet med angitt id i databasen

@@ -283,13 +283,13 @@ public class Order {
 			}
 		}
 		if(getLevering() == 1){
-			if(sum > 500){
+			if(sum > DatabaseConnector.getPriceLimit()){
 				temp += "<table width='100%'><tr><td align='left'>" + "Levering</td>" + "<td align='right'>" + 0.0 + ",-" + "</td>" + "</tr></table>" + "<br>";
 			}
 			else{
-				temp += "<table width='100%'><tr><td align='left'>" + "Levering</td>" + "<td align='right'>" + 50.0 + ",-" + "</td>" + "</tr></table>" + "<br>";
-				sum += 50;
-				mva25 += (50.0/125)*25;
+				temp += "<table width='100%'><tr><td align='left'>" + "Levering</td>" + "<td align='right'>" + DatabaseConnector.getDeliveryPrice() + ",-" + "</td>" + "</tr></table>" + "<br>";
+				sum += DatabaseConnector.getDeliveryPrice();
+				mva25 += (DatabaseConnector.getDeliveryPrice()/125)*25;
 			}
 		}
 		temp += "---------------------------------------------------------" + "<table width='100%'>" + "<tr>" + "<td align='left'>" + "Sum:" + "</td>" + "<td align='right'>" + sum + ",-" + "</td>" + "</tr>" + "</table>" + "<br><br>";

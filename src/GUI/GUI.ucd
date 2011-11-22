@@ -56,7 +56,7 @@
       </children>
       <children xsi:type="editmodel:AssociationEndEditModel" location="42,157" id="logic/Order@m4+GUI/Start@|GUI/Start#"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="logic/Order-Standard::Call->logic/Product*logic/Order-Soyatec::Import->logic/Product" source="//@children.2" target="//@children.5" targetEnd="//@children.2/@sourceConnections.2/@children.2" label="//@children.2/@sourceConnections.2/@children.0" sourceEnd="//@children.2/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="logic/Order->Standard::Call" source="//@children.2" target="//@children.5" targetEnd="//@children.2/@sourceConnections.2/@children.2" label="//@children.2/@sourceConnections.2/@children.0" sourceEnd="//@children.2/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Call»" size="55,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,77" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="114,136"/>
@@ -68,7 +68,7 @@
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.11/@sourceConnections.0 //@children.4/@sourceConnections.3 //@children.7/@sourceConnections.4" name="Address" location="915,630" size="112,275" id="logic/Address" runTimeClassModel="save(),id,con,setConnection(Ljava.sql.Connection;),Address(Ljava.lang.String;ILjava.lang.String;Ljava.lang.String;),Address(ILjava.lang.String;ILjava.lang.String;Ljava.lang.String;),zipcode,street,houseNumber,houseLetter,country,city">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.11/@sourceConnections.0 //@children.4/@sourceConnections.3 //@children.7/@sourceConnections.4" name="Address" location="915,630" size="112,275" id="logic/Address" runTimeClassModel="con,id,save(),Address(Ljava.lang.String;ILjava.lang.String;Ljava.lang.String;),setConnection(Ljava.sql.Connection;),Address(ILjava.lang.String;ILjava.lang.String;Ljava.lang.String;),street,zipcode,houseNumber,houseLetter,city,country">
     <children xsi:type="editmodel:CompartmentEditModel" size="89,144">
       <children xsi:type="editmodel:AttributeEditModel" name="city" id="logic/Address#city"/>
       <children xsi:type="editmodel:AttributeEditModel" name="con" id="logic/Address#con"/>
@@ -96,7 +96,7 @@
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.3/@sourceConnections.0 //@children.10/@sourceConnections.0 //@children.7/@sourceConnections.5 //@children.6/@sourceConnections.5" name="User" location="735,615" size="95,185" id="logic/User" runTimeClassModel="phone,getId(),User(Ljava.lang.String;Ljava.lang.String;Llogic.Address;),name,setUserId(Ljava.lang.String;),User(),toString()">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.3/@sourceConnections.0 //@children.10/@sourceConnections.0 //@children.7/@sourceConnections.5 //@children.6/@sourceConnections.5" name="User" location="735,615" size="95,185" id="logic/User" runTimeClassModel="phone,getId(),User(Ljava.lang.String;Ljava.lang.String;Llogic.Address;),name,User(),setUserId(Ljava.lang.String;),toString()">
     <children xsi:type="editmodel:CompartmentEditModel" size="72,36">
       <children xsi:type="editmodel:AttributeEditModel" name="name" id="logic/User#name"/>
       <children xsi:type="editmodel:AttributeEditModel" name="phone" id="logic/User#phone"/>
@@ -137,7 +137,7 @@
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.7/@sourceConnections.3 //@children.2/@sourceConnections.2 //@children.6/@sourceConnections.2" name="Product" location="60,814" size="114,167" id="logic/Product" runTimeClassModel="id,price,description,name,toString(),Product(Ljava.lang.String;Ljava.lang.String;D)">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.7/@sourceConnections.3 //@children.2/@sourceConnections.2 //@children.6/@sourceConnections.2" name="Product" location="60,814" size="114,167" id="logic/Product" runTimeClassModel="id,price,description,name,Product(Ljava.lang.String;Ljava.lang.String;D),toString()">
     <children xsi:type="editmodel:CompartmentEditModel" size="91,72">
       <children xsi:type="editmodel:AttributeEditModel" name="description" id="logic/Product#description"/>
       <children xsi:type="editmodel:AttributeEditModel" name="id" id="logic/Product#id"/>
@@ -179,34 +179,34 @@
         <children xsi:type="editmodel:LabelEditModel" name="1" location="266,745" size="6,10" anchorKind="LastPart"/>
       </children>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="GUI/Start-Standard::Call->logic/DatabaseConnector*GUI/Start-Standard::Instantiate->logic/DatabaseConnector*GUI/Start-Soyatec::Import->logic/DatabaseConnector" source="//@children.6" target="//@children.7" targetEnd="//@children.6/@sourceConnections.1/@children.2" label="//@children.6/@sourceConnections.1/@children.0" sourceEnd="//@children.6/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="GUI/Start->Standard::Call" source="//@children.6" target="//@children.7" targetEnd="//@children.6/@sourceConnections.1/@children.2" label="//@children.6/@sourceConnections.1/@children.0" sourceEnd="//@children.6/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Instantiate, Import, Call»" size="100,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="133,147" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="143,5"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="GUI/Start-Standard::Call->logic/Product*GUI/Start-Soyatec::Import->logic/Product" source="//@children.6" target="//@children.5" targetEnd="//@children.6/@sourceConnections.2/@children.2" label="//@children.6/@sourceConnections.2/@children.0" sourceEnd="//@children.6/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="GUI/Start->Standard::Call" source="//@children.6" target="//@children.5" targetEnd="//@children.6/@sourceConnections.2/@children.2" label="//@children.6/@sourceConnections.2/@children.0" sourceEnd="//@children.6/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Call»" size="55,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,124" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="114,43"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="GUI/Start-Standard::Call->logic/Order*GUI/Start-Soyatec::Import->logic/Order" source="//@children.6" target="//@children.2" targetEnd="//@children.6/@sourceConnections.3/@children.2" label="//@children.6/@sourceConnections.3/@children.0" sourceEnd="//@children.6/@sourceConnections.3/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="GUI/Start->Standard::Call" source="//@children.6" target="//@children.2" targetEnd="//@children.6/@sourceConnections.3/@children.2" label="//@children.6/@sourceConnections.3/@children.0" sourceEnd="//@children.6/@sourceConnections.3/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Call»" size="55,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="62,157" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="107,0"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="GUI/Start-Standard::Instantiate->Map/Map*GUI/Start-Soyatec::Import->Map/Map" source="//@children.6" target="//@children.9" targetEnd="//@children.6/@sourceConnections.4/@children.2" label="//@children.6/@sourceConnections.4/@children.0" sourceEnd="//@children.6/@sourceConnections.4/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="GUI/Start->Standard::Instantiate" source="//@children.6" target="//@children.9" targetEnd="//@children.6/@sourceConnections.4/@children.2" label="//@children.6/@sourceConnections.4/@children.0" sourceEnd="//@children.6/@sourceConnections.4/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Instantiate, Import»" size="81,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,103" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="64,6"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="GUI/Start-Standard::Call->logic/User*GUI/Start-Soyatec::Import->logic/User" source="//@children.6" target="//@children.4" targetEnd="//@children.6/@sourceConnections.5/@children.2" label="//@children.6/@sourceConnections.5/@children.0" sourceEnd="//@children.6/@sourceConnections.5/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="GUI/Start->Standard::Call" source="//@children.6" target="//@children.4" targetEnd="//@children.6/@sourceConnections.5/@children.2" label="//@children.6/@sourceConnections.5/@children.0" sourceEnd="//@children.6/@sourceConnections.5/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Call»" size="55,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="133,58" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,51"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.10/@sourceConnections.1 //@children.4/@sourceConnections.1 //@children.4/@sourceConnections.2 //@children.2/@sourceConnections.3 //@children.6/@sourceConnections.1" name="DatabaseConnector" location="525,814" size="143,491" id="logic/DatabaseConnector" runTimeClassModel="edit(Llogic.User;Llogic.User;),delivered(Llogic.Order;),DatabaseConnector(),getProducts(),getPhoneByUserId(I),edit(Ljava.lang.String;),getAddressFromUser(I),initialize(),deleteProduct(Llogic.Product;),notFinished(Ljava.lang.String;),deleteOrder(Llogic.Order;),getConnection(),getUser(Ljava.lang.String;),newProduct(Llogic.Product;),newOrder(Llogic.Order;),getUsers(),getUser(I),getOrders(Ljava.lang.String;),newUser(Llogic.User;),getProduct(Ljava.lang.String;),edit(Llogic.Product;Llogic.Product;),getOrder(Ljava.lang.String;),deleteUser(Llogic.User;),closeConnection()">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.10/@sourceConnections.1 //@children.4/@sourceConnections.1 //@children.4/@sourceConnections.2 //@children.2/@sourceConnections.3 //@children.6/@sourceConnections.1" name="DatabaseConnector" location="525,814" size="143,491" id="logic/DatabaseConnector" runTimeClassModel="edit(Llogic.User;Llogic.User;),delivered(Llogic.Order;),DatabaseConnector(),getProducts(),getPhoneByUserId(I),edit(Ljava.lang.String;),getAddressFromUser(I),initialize(),deleteProduct(Llogic.Product;),notFinished(Ljava.lang.String;),deleteOrder(Llogic.Order;),getConnection(),getUser(Ljava.lang.String;),newOrder(Llogic.Order;),newProduct(Llogic.Product;),getUsers(),getOrders(Ljava.lang.String;),getUser(I),newUser(Llogic.User;),getProduct(Ljava.lang.String;),getOrder(Ljava.lang.String;),edit(Llogic.Product;Llogic.Product;),deleteUser(Llogic.User;),closeConnection()">
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <children xsi:type="editmodel:CompartmentEditModel" size="108,432">
       <children xsi:type="editmodel:MethodEditModel" name="DatabaseConnector" id="logic/DatabaseConnector#DatabaseConnector()"/>
@@ -243,7 +243,7 @@
       </children>
       <children xsi:type="editmodel:AssociationEndEditModel" location="123,157" id="logic/DatabaseConnector@con+GUI/Start@|GUI/Start#"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="logic/DatabaseConnector-Standard::Call->logic/Order*logic/DatabaseConnector-Standard::Instantiate->logic/Order*logic/DatabaseConnector-Soyatec::Import->logic/Order" source="//@children.7" target="//@children.2" targetEnd="//@children.7/@sourceConnections.1/@children.2" label="//@children.7/@sourceConnections.1/@children.0" sourceEnd="//@children.7/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="logic/DatabaseConnector->Standard::Call" source="//@children.7" target="//@children.2" targetEnd="//@children.7/@sourceConnections.1/@children.2" label="//@children.7/@sourceConnections.1/@children.0" sourceEnd="//@children.7/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Instantiate, Import, Call»" size="100,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,330" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="171,155"/>
@@ -253,24 +253,24 @@
       <children xsi:type="editmodel:AssociationEndEditModel" location="143,416" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,69"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="logic/DatabaseConnector-Standard::Call->logic/Product*logic/DatabaseConnector-Standard::Instantiate->logic/Product*logic/DatabaseConnector-Soyatec::Import->logic/Product" source="//@children.7" target="//@children.5" targetEnd="//@children.7/@sourceConnections.3/@children.2" label="//@children.7/@sourceConnections.3/@children.0" sourceEnd="//@children.7/@sourceConnections.3/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="logic/DatabaseConnector->Standard::Call" source="//@children.7" target="//@children.5" targetEnd="//@children.7/@sourceConnections.3/@children.2" label="//@children.7/@sourceConnections.3/@children.0" sourceEnd="//@children.7/@sourceConnections.3/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Instantiate, Import, Call»" size="100,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,83" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="114,83"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="logic/DatabaseConnector-Standard::Call->logic/Address*logic/DatabaseConnector-Standard::Instantiate->logic/Address*logic/DatabaseConnector-Soyatec::Import->logic/Address" source="//@children.7" target="//@children.3" targetEnd="//@children.7/@sourceConnections.4/@children.2" label="//@children.7/@sourceConnections.4/@children.0" sourceEnd="//@children.7/@sourceConnections.4/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="logic/DatabaseConnector->Standard::Call" source="//@children.7" target="//@children.3" targetEnd="//@children.7/@sourceConnections.4/@children.2" label="//@children.7/@sourceConnections.4/@children.0" sourceEnd="//@children.7/@sourceConnections.4/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Instantiate, Import, Call»" size="100,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="143,45" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,229"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="logic/DatabaseConnector-Standard::Call->logic/User*logic/DatabaseConnector-Standard::Instantiate->logic/User*logic/DatabaseConnector-Soyatec::Import->logic/User" source="//@children.7" target="//@children.4" targetEnd="//@children.7/@sourceConnections.5/@children.2" label="//@children.7/@sourceConnections.5/@children.0" sourceEnd="//@children.7/@sourceConnections.5/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="logic/DatabaseConnector->Standard::Call" source="//@children.7" target="//@children.4" targetEnd="//@children.7/@sourceConnections.5/@children.2" label="//@children.7/@sourceConnections.5/@children.0" sourceEnd="//@children.7/@sourceConnections.5/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Instantiate, Import, Call»" size="100,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="143,109" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,181"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.7/@sourceConnections.2" name="Config" location="723,1161" size="120,139" id="localData/Config" runTimeClassModel="dBHost,dBUsername,dBName,dBPassword,dBport">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.7/@sourceConnections.2" name="Config" location="723,1161" size="120,139" id="localData/Config" runTimeClassModel="dBHost,dBName,dBUsername,dBPassword,dBport">
     <children xsi:type="editmodel:CompartmentEditModel" size="97,90">
       <children xsi:type="editmodel:AttributeEditModel" name="dBHost" id="localData/Config#dBHost"/>
       <children xsi:type="editmodel:AttributeEditModel" name="dBName" id="localData/Config#dBName"/>
@@ -296,7 +296,7 @@
       <children xsi:type="editmodel:MethodEditModel" name="run" id="GUI/History#run()"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="GUI/History-Standard::Call->logic/User*GUI/History-Soyatec::Import->logic/User" source="//@children.10" target="//@children.4" targetEnd="//@children.10/@sourceConnections.0/@children.2" label="//@children.10/@sourceConnections.0/@children.0" sourceEnd="//@children.10/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="GUI/History->Standard::Call" source="//@children.10" target="//@children.4" targetEnd="//@children.10/@sourceConnections.0/@children.2" label="//@children.10/@sourceConnections.0/@children.0" sourceEnd="//@children.10/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Call»" size="55,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="39,0" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="39,185"/>
@@ -315,7 +315,7 @@
       <children xsi:type="editmodel:MethodEditModel" name="main1" id="GUI/ChangeAddress#main1([Ljava.lang.String;)"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="GUI/ChangeAddress-Standard::Call->logic/Address*GUI/ChangeAddress-Soyatec::Import->logic/Address" source="//@children.11" target="//@children.3" targetEnd="//@children.11/@sourceConnections.0/@children.2" label="//@children.11/@sourceConnections.0/@children.0" sourceEnd="//@children.11/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="GUI/ChangeAddress->Standard::Call" source="//@children.11" target="//@children.3" targetEnd="//@children.11/@sourceConnections.0/@children.2" label="//@children.11/@sourceConnections.0/@children.0" sourceEnd="//@children.11/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Call»" size="55,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="61,0" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="55,275"/>

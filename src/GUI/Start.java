@@ -6,6 +6,7 @@ import logic.*;
 import javax.swing.ImageIcon;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
+import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -16,6 +17,7 @@ import java.awt.Color;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -37,6 +39,7 @@ import logic.Address;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -761,6 +764,24 @@ public class Start extends Thread{
 		frame.getContentPane().setLayout(null);
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if (tabbedPane.getSelectedComponent() == Rediger) {
+					JPasswordField pwd = new JPasswordField(10);
+					JOptionPane.showConfirmDialog(null, pwd, "Skriv inn passord", JOptionPane.OK_CANCEL_OPTION);
+					char[] c = pwd.getPassword();
+					if(isPasswordCorrect(c)){
+						tabbedPane.setSelectedComponent(Rediger);
+					}
+					
+					else{
+						JOptionPane.showMessageDialog(null, "Feil passord!", "Error", JOptionPane.ERROR_MESSAGE);
+						tabbedPane.setSelectedComponent(bestilling);
+					}
+				}
+			}
+		});
 		tabbedPane.setBounds(1, 1, 998, 695);
 		frame.getContentPane().add(tabbedPane);
 
@@ -1828,6 +1849,8 @@ public class Start extends Thread{
 					redigerHusNr.setText(String.valueOf(user.getAddress().getHouseNumber()));
 					redigerPostNummer.setText(user.getAddress().getZipcode());
 					redigerPostSted.setText(user.getAddress().getCity());
+//					Rediger_1.setVisible(true);
+//					leggTil.setVisible(false);
 				}
 			}
 			@Override
@@ -1845,7 +1868,7 @@ public class Start extends Thread{
 			}
 		});
 
-		leggTil = new JButton("Opprett");
+		leggTil = new JButton("Ny kunde");
 		leggTil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Address address = new Address(redigerAdresse.getText(), Integer.parseInt(redigerHusNr.getText()), redigerPostNummer.getText(), redigerPostSted.getText());
@@ -1864,8 +1887,9 @@ public class Start extends Thread{
 				}
 			}
 		});
-		leggTil.setBounds(122, 420, 100, 41);
+		leggTil.setBounds(10, 420, 100, 41);
 		kunder.add(leggTil);
+		
 
 		Slett = new JButton("Slett");
 		Slett.addActionListener(new ActionListener() {
@@ -1879,7 +1903,7 @@ public class Start extends Thread{
 		Slett.setBounds(835, 20, 100, 41);
 		kunder.add(Slett);
 
-		Rediger_1 = new JButton("Lagre");
+		Rediger_1 = new JButton("Oppdater");
 		Rediger_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Address address = new Address(redigerAdresse.getText(), Integer.parseInt(redigerHusNr.getText()), redigerPostNummer.getText(), redigerPostSted.getText());
@@ -1887,10 +1911,19 @@ public class Start extends Thread{
 				User oldUser = (User)m1.getElementAt(kunder_list.getSelectedIndex());
 				DatabaseConnector.edit(oldUser, newUser);
 				getUsers();
+				redigerNummer.setText("");
+				redigerNavn.setText("");
+				redigerHusNr.setText("");
+				redigerAdresse.setText("");
+				redigerPostNummer.setText("");
+				redigerPostSted.setText("");
+//				Rediger_1.setVisible(false);
+//				leggTil.setVisible(true);
 			}
 		});
-		Rediger_1.setBounds(10, 420, 100, 41);
+		Rediger_1.setBounds(122, 420, 100, 41);
 		kunder.add(Rediger_1);
+//		Rediger_1.setVisible(false);
 
 		redigerNavn = new JTextField();
 		redigerNavn.setFont(new Font("Verdana", Font.PLAIN, 16));
@@ -1985,6 +2018,8 @@ public class Start extends Thread{
 				redigerAdresse.setText("");
 				redigerPostNummer.setText("");
 				redigerPostSted.setText("");
+//				Rediger_1.setVisible(false);
+//				leggTil.setVisible(true);
 			}
 		});
 		button_7.setBounds(510, 420, 110, 41);
@@ -2029,23 +2064,26 @@ public class Start extends Thread{
 			}
 		});
 
-		rediger_retter = new JButton("Lagre");
+		rediger_retter = new JButton("Oppdater");
 		rediger_retter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
 					Product oldProduct = (Product)m2.getElementAt(retter_list.getSelectedIndex());
 					Product newProduct = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()));
 					DatabaseConnector.edit(oldProduct, newProduct);
-					getProducts();					
+					getProducts();
+					retterNavn.setText("");
+					retterKommentar.setText("");
+					retterPris.setText("");
 				}catch(Exception ee){
 //					ee.printStackTrace();
 				}
 			}
 		});
-		rediger_retter.setBounds(10, 420, 100, 41);
+		rediger_retter.setBounds(122, 420, 100, 41);
 		retter.add(rediger_retter);
 
-		leggTil_retter = new JButton("Opprett");
+		leggTil_retter = new JButton("Ny rett");
 		leggTil_retter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
@@ -2060,7 +2098,7 @@ public class Start extends Thread{
 				}
 			}
 		});
-		leggTil_retter.setBounds(122, 420, 100, 41);
+		leggTil_retter.setBounds(10, 420, 100, 41);
 		retter.add(leggTil_retter);
 
 		leggTil_retter_1 = new JButton("Slett");
@@ -2205,6 +2243,43 @@ public class Start extends Thread{
 				Om.run();
 			}
 		});
+		
+		JMenu mnInstillinger = new JMenu("Instillinger");
+		mnHjelp.add(mnInstillinger);
+		
+		JMenuItem mntmLeveringspris = new JMenuItem("Leveringspris");
+		mntmLeveringspris.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JPasswordField pwd = new JPasswordField(10);
+				JOptionPane.showConfirmDialog(null, pwd, "Skriv inn passord", JOptionPane.OK_CANCEL_OPTION);
+				char[] c = pwd.getPassword();
+				if(isPasswordCorrect(c)){
+					String s = JOptionPane.showInputDialog(null, "Skriv inn ny leveringspris");
+					DatabaseConnector.setDeliveryPrice(s);
+				}
+				
+				else
+					JOptionPane.showMessageDialog(null, "Feil passord!", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		});
+		mnInstillinger.add(mntmLeveringspris);
+		
+		JMenuItem mntmPrisgrenseGratisLevering = new JMenuItem("Prisgrense gratis levering");
+		mntmPrisgrenseGratisLevering.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JPasswordField pwd = new JPasswordField(10);
+				JOptionPane.showConfirmDialog(null, pwd, "Skriv inn passord", JOptionPane.OK_CANCEL_OPTION);
+				char[] c = pwd.getPassword();
+				if(isPasswordCorrect(c)){
+					String s = JOptionPane.showInputDialog(null, "Skriv inn ny prisgrense for gratis levering");
+					DatabaseConnector.setPriceLimit(s);
+				}
+				
+				else
+					JOptionPane.showMessageDialog(null, "Feil passord!", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		});
+		mnInstillinger.add(mntmPrisgrenseGratisLevering);
 		mnHjelp.add(mntmOm);
 
 		JMenu mnHistorie = new JMenu("Historikk");
@@ -2355,7 +2430,7 @@ public class Start extends Thread{
 			//m1 inneholder objektene USERS, listmodelUsers inneholder user.toString();
 			for(int i = 0; i<m1.size(); i++){
 				User user = (User)m1.getElementAt(i);
-				listmodelUsers.addElement(user.getId() + ". " + m1.getElementAt(i).toString());
+				listmodelUsers.addElement(m1.getElementAt(i).toString());
 			}
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(null, "Fant ingen kunder i databasen", "Database",  JOptionPane.INFORMATION_MESSAGE);
@@ -2391,4 +2466,24 @@ public class Start extends Thread{
 
 		}
 	}
+	/**
+	 * sjekker om passord er riktig
+	 * @param input
+	 * @return
+	 */
+	private static boolean isPasswordCorrect(char[] input) {
+		boolean isCorrect = true;
+		char[] correctPassword = { 'p', 'a', 's', 's', 'o', 'r', 'd' };
+
+		if (input.length != correctPassword.length) {
+		isCorrect = false;
+		} else {
+		isCorrect = Arrays.equals (input, correctPassword);
+		}
+
+		//Zero out the password.
+		Arrays.fill(correctPassword,'0');
+
+		return isCorrect;
+		}
 }
