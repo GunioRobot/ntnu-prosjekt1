@@ -1451,7 +1451,7 @@ public class Start extends Thread{
 						map.call("http://maps.google.com/maps/api/staticmap?zoom=15&size=400x400&sensor=false&markers=" + tmp + "&" + String.valueOf(husnummer.getText()) + "&" + tmp2 + ",norway", tmp + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());
 						lblAddressNotFound.setVisible(false);
 					}catch(Exception haha){
-						JOptionPane.showMessageDialog(null, "Velg en bestilling først", "Kart",  JOptionPane.ERROR_MESSAGE);
+//						JOptionPane.showMessageDialog(null, "Velg en bestilling først", "Kart",  JOptionPane.ERROR_MESSAGE);
 						lblAddressNotFound.setVisible(true);
 						btnRedigerAdresse.setVisible(true);						
 					}
@@ -1717,7 +1717,7 @@ public class Start extends Thread{
 					map.call(constant + url, tittle);	
 					lblAddressNotFound.setVisible(false);
 				}catch(Exception e){
-					JOptionPane.showMessageDialog(null, "Velg en bestilling først", "Kart",  JOptionPane.ERROR_MESSAGE);
+//					JOptionPane.showMessageDialog(null, "Velg en bestilling først", "Kart",  JOptionPane.ERROR_MESSAGE);
 					lblAddressNotFound.setVisible(true);
 					btnRedigerAdresse.setVisible(true);
 				}
