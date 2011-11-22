@@ -1,6 +1,9 @@
 package GUI;
 
 import java.awt.EventQueue;
+
+import localData.Config;
+import localData.JSONException;
 import logic.*;
 
 import javax.swing.ImageIcon;
@@ -724,7 +727,7 @@ public class Start extends Thread{
 				try {
 					Start window = new Start();
 					window.frame.setVisible(true);
-				} catch (Exception e) {	}
+				} catch (Exception e) {}
 			}
 		});
 	}
@@ -734,10 +737,19 @@ public class Start extends Thread{
 	 */
 	public Start() {
 		initialize();
+		try {
+			Config.init();
+		} catch(JSONException hehe){
+			exit("Klarte ikke parse config.json");
+		} catch(IOException to){
+			exit("Klarte ikke lese config.json");						
+		}catch (Exception e1) {
+			exit("En ukjent feil med config.json");
+		}
 		try{
 			DatabaseConnector.initialize();			
 		}catch(Exception e){
-			JOptionPane.showMessageDialog(null, "Klarte ikke å koble til databasen", "Database error",  JOptionPane.ERROR_MESSAGE);
+			exit("Klarte ikke å koble til databasen, vennligst kontroller config.json");
 		}
 		getUsers();
 		getProducts();
@@ -2253,7 +2265,10 @@ public class Start extends Thread{
 				JPasswordField pwd = new JPasswordField(10);
 				JOptionPane.showConfirmDialog(null, pwd, "Skriv inn passord", JOptionPane.OK_CANCEL_OPTION);
 				char[] c = pwd.getPassword();
-				if(isPasswordCorrect(c)){
+				if(JOptionPane.OK_CANCEL_OPTION == JOptionPane.CANCEL_OPTION){
+					//ikke gjør noe
+				}
+				else if(isPasswordCorrect(c)){
 					String s = JOptionPane.showInputDialog(null, "Skriv inn ny leveringspris");
 					DatabaseConnector.setDeliveryPrice(s);
 				}
@@ -2486,4 +2501,10 @@ public class Start extends Thread{
 
 		return isCorrect;
 		}
+	
+	private void exit(String s){
+		JOptionPane.showMessageDialog(null,  s, "Feil", JOptionPane.ERROR_MESSAGE);
+		System.exit(0);
+	}
+
 }

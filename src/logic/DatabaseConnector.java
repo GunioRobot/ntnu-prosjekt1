@@ -24,15 +24,17 @@ public class DatabaseConnector{
 	private static Connection con = null; // connection object
 	private static Statement stmt = null; // statement object
 
-	public static void initialize(){
-		try {
+	public static void initialize() throws Exception{
+	//	try {
 			con = getConnection();
 			stmt = con.createStatement();
 			con.setAutoCommit(true);
-		}catch(Exception e){
-			JOptionPane.showMessageDialog(null, "Klarte ikke laste inn databasen", "Database-error",  JOptionPane.ERROR_MESSAGE);
-		}
-		Address.setConnection(con);
+			Address.setConnection(con);
+//		}catch(Exception e){
+//			JOptionPane.showMessageDialog(null, "Klarte ikke laste inn databasen", "Database-error",  JOptionPane.ERROR_MESSAGE);
+			
+	//	}
+		
 	}
 	public static Connection getConnection() throws Exception {
 		String url = "jdbc:mysql:" + Config.DBHost + ":" + Config.DBport + "/" + Config.DBName;
