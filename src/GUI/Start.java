@@ -6,25 +6,24 @@ import localData.Config;
 import localData.JSONException;
 import logic.*;
 
-import javax.swing.ImageIcon;
-import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
-import javax.swing.ListSelectionModel;
+import javax.swing.ListCellRenderer;
+
 
 import java.awt.Color;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 
-import java.awt.Component;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
-import javax.swing.text.html.HTMLEditorKit;
+
 
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -59,9 +58,6 @@ import java.awt.event.FocusEvent;
 import java.io.IOException;
 
 import javax.swing.JTextArea;
-import javax.swing.event.MenuKeyListener;
-import javax.swing.event.MenuKeyEvent;
-import javax.swing.JToggleButton;
 import javax.swing.JScrollPane;
 
 /**
@@ -292,10 +288,12 @@ public class Start extends Thread{
 	 * @uml.property  name="list_1"
 	 * @uml.associationEnd  multiplicity="(1 1)"
 	 */
+	@SuppressWarnings("rawtypes")
 	private JList list_1;
 	/**
 	 * @uml.property  name="image"
 	 */
+	@SuppressWarnings("unused")
 	private BufferedImage image;
 
 	/**
@@ -320,6 +318,7 @@ public class Start extends Thread{
 	 * @uml.property  name="list"
 	 * @uml.associationEnd  multiplicity="(1 1)"
 	 */
+	@SuppressWarnings("rawtypes")
 	private JList list;
 	/**
 	 * @uml.property  name="model"
@@ -1011,6 +1010,8 @@ public class Start extends Thread{
 		reciept.add(scrollPane_7);
 
 		list = new JList(model);
+//		list.setFont(new Font("Verdana", Font.BOLD, 18));
+//		list.setFixedCellHeight(50);
 		scrollPane_7.setViewportView(list);
 
 
@@ -1391,7 +1392,7 @@ public class Start extends Thread{
 			public void actionPerformed(ActionEvent arg0) {
 
 
-				tabbedPane.setSelectedComponent(Utgaende);
+				tabbedPane.setSelectedComponent(bestilling);
 				String tmp = "";
 				try{
 					User u = DatabaseConnector.getUser(nummer.getText());
@@ -1425,48 +1426,48 @@ public class Start extends Thread{
 					temp=null;
 					DatabaseConnector.newOrder(order);
 					getOrders();
-					tmp = u.getAddress().getStreet();
-					String tmp2 = u.getAddress().getCity();
-					if (u.getAddress().getStreet().contains(" ") ||
-							u.getAddress().getStreet().contains("æ") ||
-							u.getAddress().getStreet().contains("Æ") ||
-							u.getAddress().getStreet().contains("ø") ||
-							u.getAddress().getStreet().contains("Ø") ||
-							u.getAddress().getStreet().contains("å") ||
-							u.getAddress().getStreet().contains("Å")
-							) {
-						tmp = tmp.replace(' ' , '+');
-						tmp = tmp.replace('æ' , 'e');
-						tmp = tmp.replace('ø' , 'o');
-						tmp = tmp.replace('å' , 'a');
-						tmp = tmp.replace('Æ' , 'e');
-						tmp = tmp.replace('Ø' , 'o');
-						tmp = tmp.replace('Å' , 'a');
-					}
-					if (u.getAddress().getCity().contains(" ") ||
-							u.getAddress().getCity().contains("æ") ||
-							u.getAddress().getCity().contains("Æ") ||
-							u.getAddress().getCity().contains("ø") ||
-							u.getAddress().getCity().contains("Ø") ||
-							u.getAddress().getCity().contains("å") ||
-							u.getAddress().getCity().contains("Å")
-							) {
-						tmp2 = tmp.replace(' ' , '+');
-						tmp2 = tmp.replace('æ' , 'e');
-						tmp2 = tmp.replace('ø' , 'o');
-						tmp2 = tmp.replace('å' , 'a');
-						tmp2 = tmp.replace('Æ' , 'e');
-						tmp2 = tmp.replace('Ø' , 'o');
-						tmp2 = tmp.replace('Å' , 'a');
-					}
-					try{
-						map.call("http://maps.google.com/maps/api/staticmap?zoom=15&size=400x400&sensor=false&markers=" + tmp + "&" + String.valueOf(husnummer.getText()) + "&" + tmp2 + ",norway", tmp + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());
-						lblAddressNotFound.setVisible(false);
-					}catch(Exception haha){
-//						JOptionPane.showMessageDialog(null, "Velg en bestilling først", "Kart",  JOptionPane.ERROR_MESSAGE);
-						lblAddressNotFound.setVisible(true);
-						btnRedigerAdresse.setVisible(true);						
-					}
+//					tmp = u.getAddress().getStreet();
+//					String tmp2 = u.getAddress().getCity();
+//					if (u.getAddress().getStreet().contains(" ") ||
+//							u.getAddress().getStreet().contains("æ") ||
+//							u.getAddress().getStreet().contains("Æ") ||
+//							u.getAddress().getStreet().contains("ø") ||
+//							u.getAddress().getStreet().contains("Ø") ||
+//							u.getAddress().getStreet().contains("å") ||
+//							u.getAddress().getStreet().contains("Å")
+//							) {
+//						tmp = tmp.replace(' ' , '+');
+//						tmp = tmp.replace('æ' , 'e');
+//						tmp = tmp.replace('ø' , 'o');
+//						tmp = tmp.replace('å' , 'a');
+//						tmp = tmp.replace('Æ' , 'e');
+//						tmp = tmp.replace('Ø' , 'o');
+//						tmp = tmp.replace('Å' , 'a');
+//					}
+//					if (u.getAddress().getCity().contains(" ") ||
+//							u.getAddress().getCity().contains("æ") ||
+//							u.getAddress().getCity().contains("Æ") ||
+//							u.getAddress().getCity().contains("ø") ||
+//							u.getAddress().getCity().contains("Ø") ||
+//							u.getAddress().getCity().contains("å") ||
+//							u.getAddress().getCity().contains("Å")
+//							) {
+//						tmp2 = tmp.replace(' ' , '+');
+//						tmp2 = tmp.replace('æ' , 'e');
+//						tmp2 = tmp.replace('ø' , 'o');
+//						tmp2 = tmp.replace('å' , 'a');
+//						tmp2 = tmp.replace('Æ' , 'e');
+//						tmp2 = tmp.replace('Ø' , 'o');
+//						tmp2 = tmp.replace('Å' , 'a');
+//					}
+//					try{
+//						map.call("http://maps.google.com/maps/api/staticmap?zoom=15&size=400x400&sensor=false&markers=" + tmp + "&" + String.valueOf(husnummer.getText()) + "&" + tmp2 + ",norway", tmp + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());
+//						lblAddressNotFound.setVisible(false);
+//					}catch(Exception haha){
+////						JOptionPane.showMessageDialog(null, "Velg en bestilling først", "Kart",  JOptionPane.ERROR_MESSAGE);
+//						lblAddressNotFound.setVisible(true);
+//						btnRedigerAdresse.setVisible(true);						
+//					}
 
 
 				}catch(Exception e){
@@ -1523,6 +1524,8 @@ public class Start extends Thread{
 		scrollPane.setBounds(6, 22, 229, 487);
 		panel_2.add(scrollPane);
 		list_3 = new JList(listModelOrders);
+//		list_3.setFont(new Font("Verdana", Font.BOLD, 18));
+//		list_3.setFixedCellHeight(50);
 		scrollPane.setViewportView(list_3);
 		list_3.addFocusListener(new FocusAdapter() {
 			@Override
@@ -1576,6 +1579,8 @@ public class Start extends Thread{
 		panel_3.add(scrollPane_1);
 
 		list_4 = new JList(listModelFinished);
+//		list_4.setFont(new Font("Verdana", Font.BOLD, 18));
+//		list_4.setFixedCellHeight(50);
 		scrollPane_1.setViewportView(list_4);
 		list_4.addFocusListener(new FocusAdapter() {
 			@Override
@@ -1848,6 +1853,8 @@ public class Start extends Thread{
 		panel_5.add(scrollPane_5);
 
 		kunder_list = new JList(listmodelUsers);
+//		kunder_list.setFont(new Font("Verdana", Font.BOLD, 18));
+//		kunder_list.setFixedCellHeight(50);
 		scrollPane_5.setViewportView(kunder_list);
 		kunder_list.addMouseListener(new MouseAdapter() {
 			@Override
@@ -2054,6 +2061,8 @@ public class Start extends Thread{
 		panel_6.add(scrollPane_6);
 
 		retter_list = new JList(listModelProducts);
+//		retter_list.setFont(new Font("Verdana", Font.BOLD, 18));
+//		list.setFixedCellHeight(50);
 		scrollPane_6.setViewportView(retter_list);
 		retter_list.addMouseListener(new MouseAdapter() {
 			@Override
