@@ -2275,7 +2275,6 @@ public class Start extends Thread{
 					String s = JOptionPane.showInputDialog(null, "Skriv inn ny leveringspris");
 					DatabaseConnector.setDeliveryPrice(s);
 				}
-				
 				else
 					JOptionPane.showMessageDialog(null, "Feil passord!", "Error", JOptionPane.ERROR_MESSAGE);
 			}
@@ -2491,8 +2490,8 @@ public class Start extends Thread{
 	 */
 	private static boolean isPasswordCorrect(char[] input) {
 		boolean isCorrect = true;
-		char[] correctPassword = { 'p', 'a', 's', 's', 'o', 'r', 'd' };
-
+		char[] correctPassword = Config.PASSWORD.toCharArray();
+		
 		if (input.length != correctPassword.length) {
 		isCorrect = false;
 		} else {

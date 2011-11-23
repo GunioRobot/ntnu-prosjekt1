@@ -9,6 +9,7 @@ public class Config {
 	public static String DBport = "";
 	public static String DBPassword = "";
 	public static String DBName = "";
+	public static String PASSWORD = "";
 	
 	public static void init() throws Exception {
 		JSONObject json = new JSONObject(new JSONTokener(new FileReader("config.json")));
@@ -18,6 +19,8 @@ public class Config {
 		DBport = db.getString("port");
 		DBPassword = db.getString("password");
 		DBName = db.getString("name");
+		
+		PASSWORD = json.getString("adminPassword");
 
 	}
 
