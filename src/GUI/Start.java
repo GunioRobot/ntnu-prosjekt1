@@ -1915,7 +1915,12 @@ public class Start extends Thread{
 			public void actionPerformed(ActionEvent arg0) {
 				int id = kunder_list.getSelectedIndex();
 				User user = (User)m1.getElementAt(id);
-				DatabaseConnector.deleteUser(user);
+				try{
+					DatabaseConnector.getOrder(user.getId()).getUserId();
+					DatabaseConnector.deleteUser(user);
+				}catch(Exception e){
+					JOptionPane.showMessageDialog(null, "Kunden har bestillinger, kan ikke slettes");
+				}
 				getUsers();
 			}
 		});
@@ -2125,8 +2130,13 @@ public class Start extends Thread{
 		leggTil_retter_1 = new JButton("Slett");
 		leggTil_retter_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				DatabaseConnector.deleteProduct((Product)m2.getElementAt(retter_list.getSelectedIndex()));
-				getProducts();
+				boolean bool = true;
+				try{
+					DatabaseConnector.deleteProduct((Product)m2.getElementAt(retter_list.getSelectedIndex()));
+					getProducts();	
+				}catch(Exception e){
+					JOptionPane.showMessageDialog(null, "Produktet ligger i en bestilling, kan ikke slettes");
+				}
 			}
 		});
 		leggTil_retter_1.setBounds(835, 20, 100, 41);
