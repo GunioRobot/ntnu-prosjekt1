@@ -220,14 +220,15 @@ public class DatabaseConnector{
 		case 'q': id = "14"; break;
 		case 'a': id = "15"; break;
 		}
-		ResultSet getP_rs = stmt.executeQuery("SELECT name, description, price FROM products WHERE id='"+id+"'");
+		ResultSet getP_rs = stmt.executeQuery("SELECT name, description, price, nr FROM products WHERE id='"+id+"'");
 		if(getP_rs.first() == false){
 			return null;
 		}
 		String name = getP_rs.getString(1);
 		String description = getP_rs.getString(2);
 		String price = getP_rs.getString(3);
-		Product p = new Product(name, description, Double.parseDouble(price));
+		int nr = getP_rs.getInt(4);
+		Product p = new Product(name, description, Double.parseDouble(price), nr);
 		return p;
 	}
 	/**
@@ -237,14 +238,15 @@ public class DatabaseConnector{
 	 */
 	public static DefaultListModel getProducts() throws Exception{
 		DefaultListModel products = new DefaultListModel();
-		ResultSet products_rs = stmt.executeQuery("SELECT name, description, price, id FROM products");
+		ResultSet products_rs = stmt.executeQuery("SELECT name, description, price, id, nr FROM products WHERE deleted = 0 ORDER BY name");
 		products_rs.first();
 		do{
 			String name = products_rs.getString(1);
 			String description = products_rs.getString(2);
 			String price = products_rs.getString(3);
 			String id = products_rs.getString(4);
-			Product p = new Product(name, description, Double.parseDouble(price));
+			int nr = products_rs.getInt(5);
+			Product p = new Product(name, description, Double.parseDouble(price), nr);
 			p.setId(id);
 			products.addElement(p);
 		}while(products_rs.next());
@@ -330,14 +332,11 @@ public class DatabaseConnector{
 	public static void newProduct(Product product){
 		try{
 			con.setAutoCommit(true);
-			ResultSet newProduct_rs = stmt.executeQuery("SELECT COUNT(*) FROM products");
-			newProduct_rs.first();
-			int id = Integer.parseInt(newProduct_rs.getString(1)) + 1;
-			stmt.executeUpdate("INSERT INTO products VALUES (" + id + ", '" + product.getName() + "', '" + product.getDescription() + "', '" + product.getPrice() + "')");
+			stmt.executeUpdate("INSERT INTO products SET name='"+ product.getName() + "', description='" + product.getDescription() + "', price='" + product.getPrice() + "'");
 			con.setAutoCommit(false);
-			newProduct_rs.close();
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(null, "Klarte ikke legge til nytt produkt i databasen", "SQL-feil",  JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
 		}
 	}
 	/**
@@ -369,7 +368,7 @@ public class DatabaseConnector{
 			deleteProduct_rs.first();
 			int id = Integer.parseInt(deleteProduct_rs.getString(1));
 			con.setAutoCommit(true);
-			stmt.executeUpdate("DELETE from products WHERE id='" + id + "'");
+			stmt.executeUpdate("UPDATE products SET deleted = 1 WHERE id='" + product.getId() + "'");
 			con.setAutoCommit(false);
 			deleteProduct_rs.close();
 		}catch(Exception e){
@@ -427,7 +426,7 @@ public class DatabaseConnector{
 			String id = edit.getString(1);
 			edit.close();
 			con.setAutoCommit(true);
-			stmt.executeUpdate("UPDATE products SET name='" + newProduct.getName() + "', description='" + newProduct.getDescription() + "', price='" + newProduct.getPrice() + "' WHERE id='" + id  + "'");
+			stmt.executeUpdate("UPDATE products SET name='" + newProduct.getName() + "', description='" + newProduct.getDescription() + "', price='" + newProduct.getPrice() + "' , nr= '" + newProduct.getNr() + "' WHERE id='" + id  + "'");
 			con.setAutoCommit(false);
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(null, "Klarte ikke endre produktet", "SQL-feil",  JOptionPane.ERROR_MESSAGE);

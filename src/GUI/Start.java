@@ -716,6 +716,7 @@ public class Start extends Thread{
 	 * @uml.associationEnd  multiplicity="(1 1)"
 	 */
 	private JPanel panel_6;
+	private JTextField pizzanr;
 
 	/**
 	 * Launch the application.
@@ -2077,6 +2078,7 @@ public class Start extends Thread{
 					retterNavn.setText(product.getName());
 					retterPris.setText(String.valueOf(product.getPrice()));
 					retterKommentar.setText(product.getDescription());
+					pizzanr.setText(String.valueOf(product.getNr()));
 				}
 			}
 			@Override
@@ -2086,6 +2088,7 @@ public class Start extends Thread{
 					retterNavn.setText(product.getName());
 					retterPris.setText(String.valueOf(product.getPrice()));
 					retterKommentar.setText(product.getDescription());
+					pizzanr.setText(String.valueOf(product.getNr()));
 				}
 			}
 		});
@@ -2095,12 +2098,13 @@ public class Start extends Thread{
 			public void actionPerformed(ActionEvent arg0) {
 				try{
 					Product oldProduct = (Product)m2.getElementAt(retter_list.getSelectedIndex());
-					Product newProduct = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()));
+					Product newProduct = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()), Integer.parseInt(pizzanr.getText()));
 					DatabaseConnector.edit(oldProduct, newProduct);
 					getProducts();
 					retterNavn.setText("");
 					retterKommentar.setText("");
 					retterPris.setText("");
+					pizzanr.setText("");
 				}catch(Exception ee){
 //					ee.printStackTrace();
 				}
@@ -2113,12 +2117,13 @@ public class Start extends Thread{
 		leggTil_retter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
-					Product product = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()));
+					Product product = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()), Integer.parseInt(pizzanr.getText()));
 					DatabaseConnector.newProduct(product);
 					getProducts();
 					retterNavn.setText("");
 					retterKommentar.setText("");
 					retterPris.setText("");
+					pizzanr.setText("");
 				}catch(Exception e){
 					JOptionPane.showMessageDialog(null, "Klarte ikke legge til kunde i databasen", "Database-Error",  JOptionPane.ERROR_MESSAGE);
 				}
@@ -2165,7 +2170,7 @@ public class Start extends Thread{
 			public void keyPressed(KeyEvent arg0) {
 				if(arg0.getKeyCode() == arg0.VK_ENTER){
 					try{
-						Product product = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()));
+						Product product = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()), Integer.parseInt(pizzanr.getText()));
 						DatabaseConnector.newProduct(product);
 						getProducts();
 						retterNavn.setText("");
@@ -2201,10 +2206,21 @@ public class Start extends Thread{
 				retterKommentar.setText("");
 				retterNavn.setText("");
 				retterPris.setText("");
+				pizzanr.setText("");
 			}
 		});
 		btnTmFelter.setBounds(510, 420, 110, 41);
 		retter.add(btnTmFelter);
+		
+		pizzanr = new JTextField();
+		pizzanr.setBounds(453, 199, 156, 60);
+		retter.add(pizzanr);
+		pizzanr.setColumns(10);
+		
+		JLabel lblPizzanummer = new JLabel("Pizzanummer");
+		lblPizzanummer.setFont(new Font("Verdana", Font.BOLD, 14));
+		lblPizzanummer.setBounds(450, 168, 159, 14);
+		retter.add(lblPizzanummer);
 
 
 		//____COMBOBOX FOR ASSOSIATING DISHES TO BUTTONS
@@ -2447,7 +2463,7 @@ public class Start extends Thread{
 			listModelProducts.clear();
 			for(int i = 0; i<m2.size(); i++){
 				Product pr = (Product)m2.getElementAt(i);
-				listModelProducts.addElement("#" + pr.getId() + " " + m2.getElementAt(i).toString());
+				listModelProducts.addElement(m2.getElementAt(i).toString());
 			}
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(null, "Fant ingen produkter i databasen", "Database",  JOptionPane.INFORMATION_MESSAGE);
@@ -2525,5 +2541,4 @@ public class Start extends Thread{
 		JOptionPane.showMessageDialog(null,  s, "Feil", JOptionPane.ERROR_MESSAGE);
 		System.exit(0);
 	}
-
 }

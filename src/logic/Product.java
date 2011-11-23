@@ -19,12 +19,23 @@ public class Product {
 	 */
 	private double price;
 	
-	public Product(String name, String description, double price){
+	private int nr;
+	
+	public Product(String name, String description, double price, int nr){
 		this.name = name;
 		this.description = description;
 		this.price = price;
+		this.nr = nr;
 	}
 	
+	public int getNr() {
+		return nr;
+	}
+
+	public void setNr(int nr) {
+		this.nr = nr;
+	}
+
 	private Product() { }
 
 	/**
