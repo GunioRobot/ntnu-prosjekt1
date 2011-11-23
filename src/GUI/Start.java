@@ -971,7 +971,7 @@ public class Start extends Thread{
 
 		reciept = new JPanel();
 		reciept.setBackground(Color.GRAY);
-		reciept.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Kvittering", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		reciept.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Bestilling", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(255, 250, 250)));
 		reciept.setBounds(300, 20, 352, 603);
 		bestilling.add(reciept);
 		reciept.setLayout(null);
@@ -1326,7 +1326,7 @@ public class Start extends Thread{
 
 		panel_1 = new JPanel();
 		panel_1.setBackground(Color.GRAY);
-		panel_1.setBorder(new TitledBorder(null, "Bestilling", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Bestilling", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(255, 250, 250)));
 		panel_1.setBounds(335, 30, 277, 407);
 		bestillingsInfo.add(panel_1);
 		panel_1.setLayout(null);
@@ -1463,7 +1463,6 @@ public class Start extends Thread{
 						map.call("http://maps.google.com/maps/api/staticmap?zoom=15&size=400x400&sensor=false&markers=" + tmp + "&" + String.valueOf(husnummer.getText()) + "&" + tmp2 + ",norway", tmp + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());
 						lblAddressNotFound.setVisible(false);
 					}catch(Exception haha){
-//						JOptionPane.showMessageDialog(null, "Velg en bestilling først", "Kart",  JOptionPane.ERROR_MESSAGE);
 						lblAddressNotFound.setVisible(true);
 						btnRedigerAdresse.setVisible(true);						
 					}
@@ -1514,7 +1513,7 @@ public class Start extends Thread{
 
 		panel_2 = new JPanel();
 		panel_2.setBackground(Color.GRAY);
-		panel_2.setBorder(new TitledBorder(null, "Ikke ferdig", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Ikke ferdig", TitledBorder.LEADING, TitledBorder.TOP, null, Color.ORANGE));
 		panel_2.setBounds(4, 35, 241, 515);
 		Utgaende.add(panel_2);
 		panel_2.setLayout(null);
@@ -1566,7 +1565,7 @@ public class Start extends Thread{
 
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(Color.GRAY);
-		panel_3.setBorder(new TitledBorder(null, "Ferdig", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_3.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Ferdig", TitledBorder.LEADING, TitledBorder.TOP, null, Color.GREEN));
 		panel_3.setBounds(423, 35, 241, 515);
 		Utgaende.add(panel_3);
 		panel_3.setLayout(null);
@@ -1750,7 +1749,7 @@ public class Start extends Thread{
 
 		panel_4 = new JPanel();
 		panel_4.setBackground(Color.GRAY);
-		panel_4.setBorder(new TitledBorder(null, "Kvitering", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_4.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Kvitering", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(255, 250, 250)));
 		panel_4.setBounds(676, 35, 297, 515);
 		Utgaende.add(panel_4);
 		panel_4.setLayout(null);
@@ -1837,8 +1836,9 @@ public class Start extends Thread{
 		kunder.setLayout(null);
 
 		panel_5 = new JPanel();
+		panel_5.setForeground(Color.BLACK);
 		panel_5.setBackground(Color.GRAY);
-		panel_5.setBorder(new TitledBorder(null, "Kunder", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_5.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Kunder", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(255, 250, 250)));
 		panel_5.setBounds(710, 64, 225, 496);
 		kunder.add(panel_5);
 		panel_5.setLayout(null);
@@ -1996,7 +1996,7 @@ public class Start extends Thread{
 		lblFulltNavn_1.setBounds(10, 24, 408, 28);
 		kunder.add(lblFulltNavn_1);
 
-		JLabel lblTelefonNummer = new JLabel("Telefon Nummer");
+		JLabel lblTelefonNummer = new JLabel("Telefonnummer");
 		lblTelefonNummer.setFont(new Font("Verdana", Font.BOLD, 14));
 		lblTelefonNummer.setBounds(453, 24, 230, 28);
 		kunder.add(lblTelefonNummer);
@@ -2044,7 +2044,7 @@ public class Start extends Thread{
 
 		panel_6 = new JPanel();
 		panel_6.setBackground(Color.GRAY);
-		panel_6.setBorder(new TitledBorder(null, "Produkter", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_6.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Produkter", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(255, 250, 250)));
 		panel_6.setBounds(710, 64, 225, 496);
 		retter.add(panel_6);
 		panel_6.setLayout(null);
@@ -2207,7 +2207,7 @@ public class Start extends Thread{
 
 		menuBar = new JMenuBar();
 		menuBar.setForeground(Color.BLACK);
-		menuBar.setBackground(Color.BLACK);
+		menuBar.setBackground(new Color(0, 0, 0));
 		frame.setJMenuBar(menuBar);
 
 //		label_1 = new JLabel(new ImageIcon("src/Bilder/exit.gif"));
@@ -2506,5 +2506,4 @@ public class Start extends Thread{
 		JOptionPane.showMessageDialog(null,  s, "Feil", JOptionPane.ERROR_MESSAGE);
 		System.exit(0);
 	}
-
 }
