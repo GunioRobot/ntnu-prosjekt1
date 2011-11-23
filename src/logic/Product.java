@@ -5,7 +5,7 @@ public class Product {
 	/**
 	 * @uml.property  name="id"
 	 */
-	private String id;
+	private int id;
 	/**
 	 * @uml.property  name="name"
 	 */
@@ -90,7 +90,10 @@ public class Product {
 	 * @return  the id
 	 * @uml.property  name="id"
 	 */
-	public String getId() {
+	public String getIdAsString() {
+		return String.valueOf(id);
+	}
+	public int getId() {
 		return id;
 	}
 	/**
@@ -98,7 +101,7 @@ public class Product {
 	 * @param  id
 	 * @uml.property  name="id"
 	 */
-	public void setId(String id){
+	public void setId(int id){
 		this.id = id;
 	}
 	/**

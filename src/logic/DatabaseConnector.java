@@ -7,10 +7,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+
+import GUI.Start;
 
 import localData.Config;
 
@@ -211,15 +217,7 @@ public class DatabaseConnector{
 	 * @return productet med angitt id i databasen
 	 * @throws Exception
 	 */
-	public static Product getProduct(String id) throws Exception{
-		switch(id.charAt(0)){
-		case 'o': id = "10"; break;
-		case 'n': id = "11"; break;
-		case 'i': id = "12"; break;
-		case 'e': id = "13"; break;
-		case 'q': id = "14"; break;
-		case 'a': id = "15"; break;
-		}
+	public static Product getProduct(int id) throws Exception{
 		ResultSet getP_rs = stmt.executeQuery("SELECT name, description, price, nr FROM products WHERE id='"+id+"'");
 		if(getP_rs.first() == false){
 			return null;
@@ -244,7 +242,7 @@ public class DatabaseConnector{
 			String name = products_rs.getString(1);
 			String description = products_rs.getString(2);
 			String price = products_rs.getString(3);
-			String id = products_rs.getString(4);
+			int id = products_rs.getInt(4);
 			int nr = products_rs.getInt(5);
 			Product p = new Product(name, description, Double.parseDouble(price), nr);
 			p.setId(id);
@@ -278,7 +276,7 @@ public class DatabaseConnector{
 	 * @throws Exception
 	 */
 	public static DefaultListModel getOrders(String action) throws Exception{
-		String sql = "SELECT user_id, ordered, due, delivered, id, products, comment FROM orders WHERE ";
+		String sql = "SELECT user_id, ordered, due, delivered, id, comment FROM orders WHERE ";
 		if (action.equals("due")) {
 			sql += "due IS NULL ORDER BY ordered";
 		} else if(action.equals("deliver")) {
@@ -291,26 +289,42 @@ public class DatabaseConnector{
 
 		ResultSet orders_rs = stmt.executeQuery(sql);
 		DefaultListModel orders = new DefaultListModel();
+		HashMap<Integer, Order> ordersHash = new HashMap();
 		if(orders_rs.first() == false){
 			return orders;
 		}
+		
+		sql = "SELECT id, product_id, order_id, count FROM orders_products WHERE order_id IN (";
 		do{
 			String user_id = orders_rs.getString(1);
 			String ordered = orders_rs.getString(2);
 			String due = orders_rs.getString(3);
 			String delivered = orders_rs.getString(4);
-			String id = orders_rs.getString(5);
-			String products = orders_rs.getString(6);
-			String comment = orders_rs.getString(7);
+			int id = orders_rs.getInt(5);
+			String comment = orders_rs.getString(6);
 			Order o =  new Order(user_id);
-			o.createFoodList(products);
 			o.setId(id);
 			o.setDue(due);
 			o.setDelivered(delivered);
 			o.setKommentar(comment);
 			orders.addElement(o);
+			ordersHash.put(id, o);
+			
+			sql = sql + id + ",";
 		}while(orders_rs.next());
 		orders_rs.close();
+		
+		sql = sql.substring(0, sql.length()-1) + ")";
+		
+		ResultSet products_rs = stmt.executeQuery(sql);
+		
+		if (products_rs.first()) {
+			do {
+				OrderProduct op = new OrderProduct(products_rs);
+				ordersHash.get(op.getOrderId()).setProduct(op);
+			} while(products_rs.next());
+		}
+		
 		return orders;
 	}
 	/**
@@ -319,9 +333,31 @@ public class DatabaseConnector{
 	 */
 	public static void newOrder(Order order){
 		try{
-			stmt.executeUpdate("INSERT INTO orders SET user_id = '" + order.getUserId() + "', due = NULL, delivered = NULL, products = '" + order.getProducts() + "', comment='" + order.getKommentar() + "', levering='" + order.getLevering() + "', kort='" + order.getKort() + "'");
 			con.setAutoCommit(false);
-		}catch(Exception e){
+			
+			stmt.executeUpdate("INSERT INTO orders SET user_id = '" + order.getUserId() + "', due = NULL, products = '', delivered = NULL, comment='" + order.getKommentar() + "', levering='" + order.getLevering() + "', kort='" + order.getKort() + "'", Statement.RETURN_GENERATED_KEYS);
+			
+			ResultSet rs = stmt.executeQuery("SELECT LAST_INSERT_ID()");
+			rs.first();
+			int order_id = rs.getInt(1);
+						
+			order.setId(order_id);
+			
+			String sql = "INSERT INTO orders_products (product_id, order_id, count) VALUES ";
+			DefaultListModel products = order.getProducts();
+			for(int i = 0; i < products.size(); i++) {
+		    	OrderProduct op = (OrderProduct) products.getElementAt(i);
+		    	op.setOrderId(order_id);
+				sql += "(" + op.getProductId() + ", " + op.getOrderId() + ", " + op.getCount() + "), ";
+			}
+			sql = sql.substring(0, sql.length()-2);
+			stmt.executeUpdate(sql);
+			
+			con.setAutoCommit(true);
+		} catch(Exception e){
+			if (Start.DEBUG) {
+				e.printStackTrace();
+			}
 			JOptionPane.showMessageDialog(null, "Klarte ikke lagre ny bestilling i databasen", "Error",  JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -368,7 +404,7 @@ public class DatabaseConnector{
 			deleteProduct_rs.first();
 			int id = Integer.parseInt(deleteProduct_rs.getString(1));
 			con.setAutoCommit(true);
-			stmt.executeUpdate("UPDATE products SET deleted = 1 WHERE id='" + product.getId() + "'");
+			stmt.executeUpdate("UPDATE products SET deleted = 1 WHERE id='" + product.getIdAsString() + "'");
 			con.setAutoCommit(false);
 			deleteProduct_rs.close();
 		}catch(Exception e){
@@ -381,9 +417,10 @@ public class DatabaseConnector{
 	 */
 	public static void deleteOrder(Order order){
 		try{
-			con.setAutoCommit(true);
-			stmt.executeUpdate("DELETE from orders WHERE id='" + order.getId() + "'");
 			con.setAutoCommit(false);
+			stmt.executeUpdate("DELETE FROM orders WHERE id='" + order.getId() + "'");
+			stmt.executeUpdate("DELETE FROM orders_products WHERE order_id='" + order.getId() + "'");
+			con.setAutoCommit(true);
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(null, "Klarte ikke slette bestilling fra databasen", "SQL-feil",  JOptionPane.ERROR_MESSAGE);
 		}
@@ -452,7 +489,7 @@ public class DatabaseConnector{
 	public static void delivered(Order o){
 		try{
 			con.setAutoCommit(true);
-			stmt.executeUpdate("UPDATE orders SET delivered=now() WHERE id='" + o.getId() + "'");
+			stmt.executeUpdate("UPDATE orders SET delivered=now() WHERE id='" + o.getIdAsString() + "'");
 			con.setAutoCommit(false);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -512,25 +549,35 @@ public class DatabaseConnector{
 			}
 		}
 		int id = Integer.parseInt(stringID);
-		ResultSet getOrderRs = stmt.executeQuery("SELECT id, user_id, ordered, due, delivered, products, comment, levering, kort FROM orders WHERE id ='" + id + "'");
+		ResultSet getOrderRs = stmt.executeQuery("SELECT user_id, ordered, due, delivered, comment, levering, kort FROM orders WHERE id ='" + id + "'");
 		getOrderRs.first();
-		String i = getOrderRs.getString(1);
-		String userID = getOrderRs.getString(2);
-		String ordered = getOrderRs.getString(3);
-		String due = getOrderRs.getString(4);
-		String delivered = getOrderRs.getString(5);
-		String products = getOrderRs.getString(6);
-		String comment = getOrderRs.getString(7);
-		int levering = getOrderRs.getInt(8);
-		int kort = getOrderRs.getInt(9);
-		Order o = new Order(userID);
+		
+		String userID = getOrderRs.getString(1);
+		String ordered = getOrderRs.getString(2);
+		String due = getOrderRs.getString(3);
+		String delivered = getOrderRs.getString(4);
+		String comment = getOrderRs.getString(5);
+		int levering = getOrderRs.getInt(6);
+		int kort = getOrderRs.getInt(7);
+		
+		Order o = new Order();
+		o.setUserId(userID);
 		o.setDue(due);
-		o.setId(i);
+		o.setId(id);
 		o.setDelivered(delivered);
-		o.createFoodList(products);
 		o.setKommentar(comment);
 		o.setLevering(levering);
 		o.setKort(kort);
+		
+		ResultSet products_rs = stmt.executeQuery("SELECT id, product_id, order_id, count FROM orders_products WHERE order_id = " + id);
+		if (products_rs.first()) {
+			do {
+				OrderProduct op = new OrderProduct(products_rs);
+				o.setProduct(op);
+			} while(products_rs.next());
+		}
+		
+
 		return o;
 	}
 }

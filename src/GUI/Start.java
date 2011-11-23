@@ -64,6 +64,9 @@ import javax.swing.JScrollPane;
  * Hovedklassen som kjører programmet
  */
 public class Start extends Thread{
+	
+	public static boolean DEBUG = true;
+	
 	/**
 	 * @uml.property  name="frame"
 	 * @uml.associationEnd  multiplicity="(1 1)"
@@ -423,6 +426,7 @@ public class Start extends Thread{
 	/**
 	 * @uml.property  name="sisteTrykteKnapp"
 	 */
+	
 	private String sisteTrykteKnapp;
 	/**
 	 * @uml.property  name="map"
@@ -1397,7 +1401,7 @@ public class Start extends Thread{
 				String tmp = "";
 				try{
 					User u = DatabaseConnector.getUser(nummer.getText());
-
+					
 					u.getAddress().setStreet(gatenavn.getText());
 					u.getAddress().setHouseNumber(Integer.parseInt(husnummer.getText()));
 					u.getAddress().setZipcode(postnummer.getText());
@@ -1427,51 +1431,11 @@ public class Start extends Thread{
 					temp=null;
 					DatabaseConnector.newOrder(order);
 					getOrders();
-//					tmp = u.getAddress().getStreet();
-//					String tmp2 = u.getAddress().getCity();
-//					if (u.getAddress().getStreet().contains(" ") ||
-//							u.getAddress().getStreet().contains("æ") ||
-//							u.getAddress().getStreet().contains("Æ") ||
-//							u.getAddress().getStreet().contains("ø") ||
-//							u.getAddress().getStreet().contains("Ø") ||
-//							u.getAddress().getStreet().contains("å") ||
-//							u.getAddress().getStreet().contains("Å")
-//							) {
-//						tmp = tmp.replace(' ' , '+');
-//						tmp = tmp.replace('æ' , 'e');
-//						tmp = tmp.replace('ø' , 'o');
-//						tmp = tmp.replace('å' , 'a');
-//						tmp = tmp.replace('Æ' , 'e');
-//						tmp = tmp.replace('Ø' , 'o');
-//						tmp = tmp.replace('Å' , 'a');
-//					}
-//					if (u.getAddress().getCity().contains(" ") ||
-//							u.getAddress().getCity().contains("æ") ||
-//							u.getAddress().getCity().contains("Æ") ||
-//							u.getAddress().getCity().contains("ø") ||
-//							u.getAddress().getCity().contains("Ø") ||
-//							u.getAddress().getCity().contains("å") ||
-//							u.getAddress().getCity().contains("Å")
-//							) {
-//						tmp2 = tmp.replace(' ' , '+');
-//						tmp2 = tmp.replace('æ' , 'e');
-//						tmp2 = tmp.replace('ø' , 'o');
-//						tmp2 = tmp.replace('å' , 'a');
-//						tmp2 = tmp.replace('Æ' , 'e');
-//						tmp2 = tmp.replace('Ø' , 'o');
-//						tmp2 = tmp.replace('Å' , 'a');
-//					}
-//					try{
-//						map.call("http://maps.google.com/maps/api/staticmap?zoom=15&size=400x400&sensor=false&markers=" + tmp + "&" + String.valueOf(husnummer.getText()) + "&" + tmp2 + ",norway", tmp + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());
-//						lblAddressNotFound.setVisible(false);
-//					}catch(Exception haha){
-////						JOptionPane.showMessageDialog(null, "Velg en bestilling først", "Kart",  JOptionPane.ERROR_MESSAGE);
-//						lblAddressNotFound.setVisible(true);
-//						btnRedigerAdresse.setVisible(true);						
-//					}
-
 
 				}catch(Exception e){
+					if(DEBUG){
+						e.printStackTrace();						
+					}
 					try{
 						Address a = new Address(gatenavn.getText(), Integer.parseInt(husnummer.getText()), postnummer.getText(), poststed.getText());
 						User u = new User(navn.getText(), nummer.getText(), a);
@@ -1497,7 +1461,10 @@ public class Start extends Thread{
 						model.clear();
 						frame.repaint();
 					}catch(Exception j){
-						JOptionPane.showMessageDialog(null, "Klarte ikke legge lage ny bruker", "Send-Error",  JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Klarte ikke lage ny bruker", "Send-Error",  JOptionPane.ERROR_MESSAGE);
+						if(DEBUG){
+							j.printStackTrace();
+						}
 					}
 				}
 
@@ -1541,7 +1508,7 @@ public class Start extends Thread{
 					try{
 						int selected = list_3.getSelectedIndex();
 						Order o = DatabaseConnector.getOrder((String)list_3.getSelectedValue());							
-						showProductModel = o.getProductsAsDefaultListModel();
+						showProductModel = o.getProductsStringAsDefaultListModel();
 						showProductList.setModel(showProductModel);
 						kvitering.setText(o.getProductsString());
 						getOrders();
@@ -1556,7 +1523,7 @@ public class Start extends Thread{
 				else if(arg0.getClickCount() == 2){
 					try{
 						Order o = DatabaseConnector.getOrder((String)list_3.getSelectedValue());							
-						DatabaseConnector.edit(o.getId());
+						DatabaseConnector.edit(o.getIdAsString());
 						getOrders();
 						textArea.setText("");
 						showProductModel.clear();
@@ -1596,7 +1563,7 @@ public class Start extends Thread{
 					try{
 						int selected = list_4.getSelectedIndex();
 						Order o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
-						showProductModel = o.getProductsAsDefaultListModel();
+						showProductModel = o.getProductsStringAsDefaultListModel();
 						showProductList.setModel(showProductModel);
 						kvitering.setText(o.getProductsString());
 						getOrders();
@@ -1610,7 +1577,7 @@ public class Start extends Thread{
 				else if(arg0.getClickCount() == 2){
 					try{
 						Order o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
-						DatabaseConnector.notFinished(o.getId());
+						DatabaseConnector.notFinished(o.getIdAsString());
 						getOrders();
 						textArea.setText("");
 						showProductModel.clear();
@@ -1927,6 +1894,7 @@ public class Start extends Thread{
 		});
 		Slett.setBounds(835, 20, 100, 41);
 		kunder.add(Slett);
+		Slett.setVisible(false);
 
 		Rediger_1 = new JButton("Oppdater");
 		Rediger_1.addActionListener(new ActionListener() {
@@ -2357,7 +2325,7 @@ public class Start extends Thread{
 			String pizzaListe = "<html>";
 			for (int j = 0; j < 9; j++) {
 				Product p = (Product)m2.getElementAt(j);
-				pizzaListe += "#" + p.getId() + " " + p.toString() + "<br>" + p.getDescription() + "<br><br>";
+				pizzaListe += "#" + p.getIdAsString() + " " + p.toString() + "<br>" + p.getDescription() + "<br><br>";
 			}
 			pizzaInfo.setText(pizzaListe + "</html>");
 		}catch(Exception eee){
@@ -2537,7 +2505,7 @@ public class Start extends Thread{
 		return isCorrect;
 		}
 	
-	private void exit(String s){
+	public static void exit(String s){
 		JOptionPane.showMessageDialog(null,  s, "Feil", JOptionPane.ERROR_MESSAGE);
 		System.exit(0);
 	}
