@@ -1442,49 +1442,6 @@ public class Start extends Thread{
 					model.clear();
 					DatabaseConnector.newOrder(order);
 					getOrders();
-					
-					tmp = u.getAddress().getStreet();
-					String tmp2 = u.getAddress().getCity();
-					if (u.getAddress().getStreet().contains(" ") ||
-							u.getAddress().getStreet().contains("æ") ||
-							u.getAddress().getStreet().contains("Æ") ||
-							u.getAddress().getStreet().contains("ø") ||
-							u.getAddress().getStreet().contains("Ø") ||
-							u.getAddress().getStreet().contains("å") ||
-							u.getAddress().getStreet().contains("Å")
-							) {
-						tmp = tmp.replace(' ' , '+');
-						tmp = tmp.replace('æ' , 'e');
-						tmp = tmp.replace('ø' , 'o');
-						tmp = tmp.replace('å' , 'a');
-						tmp = tmp.replace('Æ' , 'e');
-						tmp = tmp.replace('Ø' , 'o');
-						tmp = tmp.replace('Å' , 'a');
-					}
-					if (u.getAddress().getCity().contains(" ") ||
-							u.getAddress().getCity().contains("æ") ||
-							u.getAddress().getCity().contains("Æ") ||
-							u.getAddress().getCity().contains("ø") ||
-							u.getAddress().getCity().contains("Ø") ||
-							u.getAddress().getCity().contains("å") ||
-							u.getAddress().getCity().contains("Å")
-							) {
-						tmp2 = tmp.replace(' ' , '+');
-						tmp2 = tmp.replace('æ' , 'e');
-						tmp2 = tmp.replace('ø' , 'o');
-						tmp2 = tmp.replace('å' , 'a');
-						tmp2 = tmp.replace('Æ' , 'e');
-						tmp2 = tmp.replace('Ø' , 'o');
-						tmp2 = tmp.replace('Å' , 'a');
-					}
-					try{
-						map.call("http://maps.google.com/maps/api/staticmap?zoom=15&size=400x400&sensor=false&markers=" + tmp + "&" + String.valueOf(husnummer.getText()) + "&" + tmp2 + ",norway", tmp + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());
-						lblAddressNotFound.setVisible(false);
-					}catch(Exception haha){
-						lblAddressNotFound.setVisible(true);
-						btnRedigerAdresse.setVisible(true);						
-					}
-
 
 				}catch(Exception e){
 					if(DEBUG){
