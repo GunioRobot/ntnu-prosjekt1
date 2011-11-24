@@ -85,7 +85,7 @@ public class History {
 				try{
 					modelVarer.clear();
 					Order o = (Order)model1.getElementAt(historyList.getSelectedIndex());
-					modelVarer = o.getProductsAsDefaultListModel();
+					modelVarer = o.getProductsStringAsDefaultListModel();
 					varerList.setModel(modelVarer);
 				}catch(Exception et){
 					

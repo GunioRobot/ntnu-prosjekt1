@@ -1,16 +1,19 @@
 package logic;
 import java.sql.Connection;
 import java.text.DecimalFormat;
+import java.util.HashMap;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+
+import GUI.Start;
 
 public class Order {
 	
 	/**
 	 * @uml.property  name="id"
 	 */
-	private String id;
+	private int id;
 	/**
 	 * @uml.property  name="userId"
 	 */
@@ -18,7 +21,7 @@ public class Order {
 	/**
 	 * @uml.property  name="products"
 	 */
-	private String products;
+	private DefaultListModel products;
 	/**
 	 * @uml.property  name="ordered"
 	 */
@@ -60,7 +63,15 @@ public class Order {
 	 * @param delivered
 	 */
 	public Order(String userId){
+		init();
 		this.userId = userId;
+	}
+	public Order() {
+		init();
+		// TODO Auto-generated constructor stub
+	}
+	private void init() {
+		this.products = new DefaultListModel();
 	}
 	/**
 	 * sets levering
@@ -110,18 +121,20 @@ public class Order {
 	 * @return  the products
 	 * @uml.property  name="products"
 	 */
-	public String getProducts() {
-		return products;
+	public DefaultListModel getProducts() {
+		return this.products;
 	}
 	
 	/**
 	 * Lager en string som viser hvilke produkter og hvor mange som er bestyilt.
 	 * @param  produkter, array som inneholder produktene som er bestilt.
+	 * @throws Exception 
 	 * @uml.property  name="products"
 	 */
-	public void setProducts(String[] produkter){
-		this.products = "";
-		
+	
+	//234 x Pizza nr.1
+	public void setProducts(String[] produkter) throws Exception{
+		String products = "";
 		for(int i = 0; i<produkter.length; i++){
 			boolean bol = true;
 			for(int j = 0; j<produkter[i].length(); j++){
@@ -129,25 +142,59 @@ public class Order {
 					bol = false;
 				}
 				if(bol){
-					this.products += produkter[i].charAt(j);					
+					products += produkter[i].charAt(j);					
 				}
 			}
-			this.products += ":";
+			products += ":";
 			if((int)produkter[i].charAt(produkter[i].length()-1) > 57){
-				this.products +=produkter[i].charAt(produkter[i].length()-3);
+				products +=produkter[i].charAt(produkter[i].length()-3);
 			}
 			else
-				this.products += produkter[i].charAt(produkter[i].length()-1);
-			if(i < produkter.length){
-				this.products += "-";				
+				products += produkter[i].charAt(produkter[i].length()-1);
+			if(i+1 < produkter.length){
+				products += "-";				
 			}
+		}
+		createFoodList(products);
+		
+		DefaultListModel allProducts = DatabaseConnector.getProducts();
+		
+		this.products.clear();
+		for (int i = 0; i < produkt.length; i++) {
+			
+			// Find product
+			Product product = null;
+			for(int j = 0; j < allProducts.size(); j++) {
+				Product p = (Product) allProducts.getElementAt(j);
+				if((int)produkt[i].charAt(produkt[i].length()-1) > 57){ // er en brus
+					if (p.getName().charAt(p.getName().length()-3) == produkt[i].charAt(0)) {
+						product = p;
+						break;
+					}
+				}
+				else { // er en pizza
+					if (p.getNr() == Integer.parseInt(produkt[i])) {
+						product = p;
+						break;
+					}
+				}
+				
+			}
+			
+			if (product == null) {
+				continue;
+//				Start.exit("Det skjedde en feil ved parsing av produkter");
+			}
+			OrderProduct op = new OrderProduct(product.getId(), Integer.valueOf(this.getIdAsString()), antall[i]);
+			this.products.addElement(op);
 		}
 	}
 	/**
 	 * Lager en liste over maten som er bestilt.
 	 * @param s
 	 */
-	public void createFoodList(String s){
+	//43:6-3:2-5:1
+	private void createFoodList(String s){
 		int teller = 0;
 		for(int i = 0; i<s.length(); i++){
 			if(s.charAt(i) == '-'){
@@ -179,29 +226,32 @@ public class Order {
 	/**
 	 * @param products the products to set
 	 */
-	public void setProducts(String products) {
-		this.products = products;
+//	public void setProducts(String products) {
+//		this.products = products;
+//	}
+	public int getId() {
+		return id;
 	}
 	/**
 	 * @return  the id
 	 * @uml.property  name="id"
 	 */
-	public String getId() {
-		return id;
+	public String getIdAsString() {
+		return String.valueOf(id);
 	}
 	/**
 	 * sets the order id.
 	 * @param  a
 	 * @uml.property  name="id"
 	 */
-	public void setId(String a){
-		this.id = a;
+	public void setId(int id){
+		this.id = id;
 	}
 	/**
 	 * Returns a string representation of the order.
 	 */
 	public String toString(){
-		String s = getId() + " ";
+		String s = getIdAsString() + " ";
 		try {
 			s += DatabaseConnector.getUser(Integer.parseInt(userId));
 		} catch (Exception e) {
@@ -244,18 +294,13 @@ public class Order {
 	/**
 	 * returns a istmodel containing the products in the order
 	 * @return
+	 * @throws Exception 
 	 */
-	public DefaultListModel getProductsAsDefaultListModel(){
+	public DefaultListModel getProductsStringAsDefaultListModel() throws Exception{
 		DefaultListModel dlm = new DefaultListModel();
-		for(int i = 0; i<antall.length; i++){
-			try{
-				if(!produkt[i].equals("")){
-					String navn = DatabaseConnector.getProduct(produkt[i]).getName();
-					dlm.add(i, antall[i] + " x " + navn);
-				}
-			}catch(Exception e){
-				JOptionPane.showMessageDialog(null, "Klarte ikke lage liste med produkter", "SQL-feil",  JOptionPane.ERROR_MESSAGE);
-			}
+		for(int i = 0; i< products.size(); i++){
+			OrderProduct po = (OrderProduct) products.getElementAt(i);
+			dlm.add(i, po.getCount() + " x " + po.getName());
 		}		
 		return dlm;
 	}
@@ -268,17 +313,19 @@ public class Order {
 		double sum = 0;
 		double mva14 = 0, mva25 = 0;
 		DecimalFormat d = new DecimalFormat("0.00");
-		for (int i = 0; i < antall.length; i++) {
+		for(int i = 0; i< products.size(); i++){
 			try {
-				if(!produkt[i].equals("")){
-					Product p = DatabaseConnector.getProduct(produkt[i]);
-					String navn = p.getName();
-					String pris = String.valueOf(p.getPrice()*antall[i]);
-					temp += "<table width='100%'><tr><td align='left'>" + String.valueOf(antall[i]) + " x " + navn + "</td>" + "<td align='right'>" + pris + ",-" + "</td>" + "</tr></table>" + "<br>";
-					sum += Double.parseDouble(pris);
-					mva14 += (Double.parseDouble(pris)/114)*14;
-				}
+				OrderProduct po = (OrderProduct) products.getElementAt(i);
+				Product p = po.getProduct();
+				String navn = p.getName();
+				String pris = String.valueOf(p.getPrice()*po.getCount());
+				temp += "<table width='100%'><tr><td align='left'>" + String.valueOf(po.getCount()) + " x " + navn + "</td>" + "<td align='right'>" + pris + ",-" + "</td>" + "</tr></table>" + "<br>";
+				sum += Double.parseDouble(pris);
+				mva14 += (Double.parseDouble(pris)/114)*14;
 			} catch (Exception e) {
+				if (Start.DEBUG) {
+					e.printStackTrace();
+				}
 				JOptionPane.showMessageDialog(null, "Klarte ikke generere kvittering", "Bestilling",  JOptionPane.ERROR_MESSAGE);
 			}
 		}
@@ -315,5 +362,8 @@ public class Order {
 	 */
 	public String getKommentar(){
 		return this.kommentar;
+	}
+	public void setProduct(OrderProduct op) {
+		this.products.addElement(op);
 	}
 }

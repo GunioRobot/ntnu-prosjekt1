@@ -5,7 +5,7 @@ public class Product {
 	/**
 	 * @uml.property  name="id"
 	 */
-	private String id;
+	private int id;
 	/**
 	 * @uml.property  name="name"
 	 */
@@ -19,12 +19,23 @@ public class Product {
 	 */
 	private double price;
 	
-	public Product(String name, String description, double price){
+	private int nr;
+	
+	public Product(String name, String description, double price, int nr){
 		this.name = name;
 		this.description = description;
 		this.price = price;
+		this.nr = nr;
 	}
 	
+	public int getNr() {
+		return nr;
+	}
+
+	public void setNr(int nr) {
+		this.nr = nr;
+	}
+
 	private Product() { }
 
 	/**
@@ -79,7 +90,10 @@ public class Product {
 	 * @return  the id
 	 * @uml.property  name="id"
 	 */
-	public String getId() {
+	public String getIdAsString() {
+		return String.valueOf(id);
+	}
+	public int getId() {
 		return id;
 	}
 	/**
@@ -87,7 +101,7 @@ public class Product {
 	 * @param  id
 	 * @uml.property  name="id"
 	 */
-	public void setId(String id){
+	public void setId(int id){
 		this.id = id;
 	}
 	/**

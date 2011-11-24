@@ -6,25 +6,24 @@ import localData.Config;
 import localData.JSONException;
 import logic.*;
 
-import javax.swing.ImageIcon;
-import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
-import javax.swing.ListSelectionModel;
+import javax.swing.ListCellRenderer;
+
 
 import java.awt.Color;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 
-import java.awt.Component;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
-import javax.swing.text.html.HTMLEditorKit;
+
 
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -59,15 +58,15 @@ import java.awt.event.FocusEvent;
 import java.io.IOException;
 
 import javax.swing.JTextArea;
-import javax.swing.event.MenuKeyListener;
-import javax.swing.event.MenuKeyEvent;
-import javax.swing.JToggleButton;
 import javax.swing.JScrollPane;
 
 /**
  * Hovedklassen som kjører programmet
  */
 public class Start extends Thread{
+	
+	public static boolean DEBUG = true;
+	
 	/**
 	 * @uml.property  name="frame"
 	 * @uml.associationEnd  multiplicity="(1 1)"
@@ -292,10 +291,12 @@ public class Start extends Thread{
 	 * @uml.property  name="list_1"
 	 * @uml.associationEnd  multiplicity="(1 1)"
 	 */
+	@SuppressWarnings("rawtypes")
 	private JList list_1;
 	/**
 	 * @uml.property  name="image"
 	 */
+	@SuppressWarnings("unused")
 	private BufferedImage image;
 
 	/**
@@ -320,6 +321,7 @@ public class Start extends Thread{
 	 * @uml.property  name="list"
 	 * @uml.associationEnd  multiplicity="(1 1)"
 	 */
+	@SuppressWarnings("rawtypes")
 	private JList list;
 	/**
 	 * @uml.property  name="model"
@@ -424,6 +426,7 @@ public class Start extends Thread{
 	/**
 	 * @uml.property  name="sisteTrykteKnapp"
 	 */
+	
 	private String sisteTrykteKnapp;
 	/**
 	 * @uml.property  name="map"
@@ -717,6 +720,7 @@ public class Start extends Thread{
 	 * @uml.associationEnd  multiplicity="(1 1)"
 	 */
 	private JPanel panel_6;
+	private JTextField pizzanr;
 
 	/**
 	 * Launch the application.
@@ -1011,6 +1015,8 @@ public class Start extends Thread{
 		reciept.add(scrollPane_7);
 
 		list = new JList(model);
+//		list.setFont(new Font("Verdana", Font.BOLD, 18));
+//		list.setFixedCellHeight(50);
 		scrollPane_7.setViewportView(list);
 
 
@@ -1391,11 +1397,11 @@ public class Start extends Thread{
 			public void actionPerformed(ActionEvent arg0) {
 
 
-				tabbedPane.setSelectedComponent(Utgaende);
+				tabbedPane.setSelectedComponent(bestilling);
 				String tmp = "";
 				try{
 					User u = DatabaseConnector.getUser(nummer.getText());
-
+					
 					u.getAddress().setStreet(gatenavn.getText());
 					u.getAddress().setHouseNumber(Integer.parseInt(husnummer.getText()));
 					u.getAddress().setZipcode(postnummer.getText());
@@ -1425,6 +1431,7 @@ public class Start extends Thread{
 					temp=null;
 					DatabaseConnector.newOrder(order);
 					getOrders();
+					
 					tmp = u.getAddress().getStreet();
 					String tmp2 = u.getAddress().getCity();
 					if (u.getAddress().getStreet().contains(" ") ||
@@ -1469,6 +1476,9 @@ public class Start extends Thread{
 
 
 				}catch(Exception e){
+					if(DEBUG){
+						e.printStackTrace();						
+					}
 					try{
 						Address a = new Address(gatenavn.getText(), Integer.parseInt(husnummer.getText()), postnummer.getText(), poststed.getText());
 						User u = new User(navn.getText(), nummer.getText(), a);
@@ -1494,7 +1504,10 @@ public class Start extends Thread{
 						model.clear();
 						frame.repaint();
 					}catch(Exception j){
-						JOptionPane.showMessageDialog(null, "Klarte ikke legge lage ny bruker", "Send-Error",  JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Klarte ikke lage ny bruker", "Send-Error",  JOptionPane.ERROR_MESSAGE);
+						if(DEBUG){
+							j.printStackTrace();
+						}
 					}
 				}
 
@@ -1522,6 +1535,8 @@ public class Start extends Thread{
 		scrollPane.setBounds(6, 22, 229, 487);
 		panel_2.add(scrollPane);
 		list_3 = new JList(listModelOrders);
+//		list_3.setFont(new Font("Verdana", Font.BOLD, 18));
+//		list_3.setFixedCellHeight(50);
 		scrollPane.setViewportView(list_3);
 		list_3.addFocusListener(new FocusAdapter() {
 			@Override
@@ -1536,7 +1551,7 @@ public class Start extends Thread{
 					try{
 						int selected = list_3.getSelectedIndex();
 						Order o = DatabaseConnector.getOrder((String)list_3.getSelectedValue());							
-						showProductModel = o.getProductsAsDefaultListModel();
+						showProductModel = o.getProductsStringAsDefaultListModel();
 						showProductList.setModel(showProductModel);
 						kvitering.setText(o.getProductsString());
 						getOrders();
@@ -1551,7 +1566,7 @@ public class Start extends Thread{
 				else if(arg0.getClickCount() == 2){
 					try{
 						Order o = DatabaseConnector.getOrder((String)list_3.getSelectedValue());							
-						DatabaseConnector.edit(o.getId());
+						DatabaseConnector.edit(o.getIdAsString());
 						getOrders();
 						textArea.setText("");
 						showProductModel.clear();
@@ -1575,6 +1590,8 @@ public class Start extends Thread{
 		panel_3.add(scrollPane_1);
 
 		list_4 = new JList(listModelFinished);
+//		list_4.setFont(new Font("Verdana", Font.BOLD, 18));
+//		list_4.setFixedCellHeight(50);
 		scrollPane_1.setViewportView(list_4);
 		list_4.addFocusListener(new FocusAdapter() {
 			@Override
@@ -1589,7 +1606,7 @@ public class Start extends Thread{
 					try{
 						int selected = list_4.getSelectedIndex();
 						Order o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
-						showProductModel = o.getProductsAsDefaultListModel();
+						showProductModel = o.getProductsStringAsDefaultListModel();
 						showProductList.setModel(showProductModel);
 						kvitering.setText(o.getProductsString());
 						getOrders();
@@ -1603,7 +1620,7 @@ public class Start extends Thread{
 				else if(arg0.getClickCount() == 2){
 					try{
 						Order o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
-						DatabaseConnector.notFinished(o.getId());
+						DatabaseConnector.notFinished(o.getIdAsString());
 						getOrders();
 						textArea.setText("");
 						showProductModel.clear();
@@ -1848,6 +1865,8 @@ public class Start extends Thread{
 		panel_5.add(scrollPane_5);
 
 		kunder_list = new JList(listmodelUsers);
+//		kunder_list.setFont(new Font("Verdana", Font.BOLD, 18));
+//		kunder_list.setFixedCellHeight(50);
 		scrollPane_5.setViewportView(kunder_list);
 		kunder_list.addMouseListener(new MouseAdapter() {
 			@Override
@@ -1908,12 +1927,18 @@ public class Start extends Thread{
 			public void actionPerformed(ActionEvent arg0) {
 				int id = kunder_list.getSelectedIndex();
 				User user = (User)m1.getElementAt(id);
-				DatabaseConnector.deleteUser(user);
+				try{
+					DatabaseConnector.getOrder(user.getId()).getUserId();
+					DatabaseConnector.deleteUser(user);
+				}catch(Exception e){
+					JOptionPane.showMessageDialog(null, "Kunden har bestillinger, kan ikke slettes");
+				}
 				getUsers();
 			}
 		});
 		Slett.setBounds(835, 20, 100, 41);
 		kunder.add(Slett);
+		Slett.setVisible(false);
 
 		Rediger_1 = new JButton("Oppdater");
 		Rediger_1.addActionListener(new ActionListener() {
@@ -2054,6 +2079,8 @@ public class Start extends Thread{
 		panel_6.add(scrollPane_6);
 
 		retter_list = new JList(listModelProducts);
+//		retter_list.setFont(new Font("Verdana", Font.BOLD, 18));
+//		list.setFixedCellHeight(50);
 		scrollPane_6.setViewportView(retter_list);
 		retter_list.addMouseListener(new MouseAdapter() {
 			@Override
@@ -2063,6 +2090,7 @@ public class Start extends Thread{
 					retterNavn.setText(product.getName());
 					retterPris.setText(String.valueOf(product.getPrice()));
 					retterKommentar.setText(product.getDescription());
+					pizzanr.setText(String.valueOf(product.getNr()));
 				}
 			}
 			@Override
@@ -2072,6 +2100,7 @@ public class Start extends Thread{
 					retterNavn.setText(product.getName());
 					retterPris.setText(String.valueOf(product.getPrice()));
 					retterKommentar.setText(product.getDescription());
+					pizzanr.setText(String.valueOf(product.getNr()));
 				}
 			}
 		});
@@ -2081,12 +2110,13 @@ public class Start extends Thread{
 			public void actionPerformed(ActionEvent arg0) {
 				try{
 					Product oldProduct = (Product)m2.getElementAt(retter_list.getSelectedIndex());
-					Product newProduct = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()));
+					Product newProduct = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()), Integer.parseInt(pizzanr.getText()));
 					DatabaseConnector.edit(oldProduct, newProduct);
 					getProducts();
 					retterNavn.setText("");
 					retterKommentar.setText("");
 					retterPris.setText("");
+					pizzanr.setText("");
 				}catch(Exception ee){
 //					ee.printStackTrace();
 				}
@@ -2099,12 +2129,13 @@ public class Start extends Thread{
 		leggTil_retter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
-					Product product = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()));
+					Product product = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()), Integer.parseInt(pizzanr.getText()));
 					DatabaseConnector.newProduct(product);
 					getProducts();
 					retterNavn.setText("");
 					retterKommentar.setText("");
 					retterPris.setText("");
+					pizzanr.setText("");
 				}catch(Exception e){
 					JOptionPane.showMessageDialog(null, "Klarte ikke legge til kunde i databasen", "Database-Error",  JOptionPane.ERROR_MESSAGE);
 				}
@@ -2116,8 +2147,13 @@ public class Start extends Thread{
 		leggTil_retter_1 = new JButton("Slett");
 		leggTil_retter_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				DatabaseConnector.deleteProduct((Product)m2.getElementAt(retter_list.getSelectedIndex()));
-				getProducts();
+				boolean bool = true;
+				try{
+					DatabaseConnector.deleteProduct((Product)m2.getElementAt(retter_list.getSelectedIndex()));
+					getProducts();	
+				}catch(Exception e){
+					JOptionPane.showMessageDialog(null, "Produktet ligger i en bestilling, kan ikke slettes");
+				}
 			}
 		});
 		leggTil_retter_1.setBounds(835, 20, 100, 41);
@@ -2146,7 +2182,7 @@ public class Start extends Thread{
 			public void keyPressed(KeyEvent arg0) {
 				if(arg0.getKeyCode() == arg0.VK_ENTER){
 					try{
-						Product product = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()));
+						Product product = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()), Integer.parseInt(pizzanr.getText()));
 						DatabaseConnector.newProduct(product);
 						getProducts();
 						retterNavn.setText("");
@@ -2182,10 +2218,21 @@ public class Start extends Thread{
 				retterKommentar.setText("");
 				retterNavn.setText("");
 				retterPris.setText("");
+				pizzanr.setText("");
 			}
 		});
 		btnTmFelter.setBounds(510, 420, 110, 41);
 		retter.add(btnTmFelter);
+		
+		pizzanr = new JTextField();
+		pizzanr.setBounds(453, 199, 156, 60);
+		retter.add(pizzanr);
+		pizzanr.setColumns(10);
+		
+		JLabel lblPizzanummer = new JLabel("Pizzanummer");
+		lblPizzanummer.setFont(new Font("Verdana", Font.BOLD, 14));
+		lblPizzanummer.setBounds(450, 168, 159, 14);
+		retter.add(lblPizzanummer);
 
 
 		//____COMBOBOX FOR ASSOSIATING DISHES TO BUTTONS
@@ -2272,7 +2319,6 @@ public class Start extends Thread{
 					String s = JOptionPane.showInputDialog(null, "Skriv inn ny leveringspris");
 					DatabaseConnector.setDeliveryPrice(s);
 				}
-				
 				else
 					JOptionPane.showMessageDialog(null, "Feil passord!", "Error", JOptionPane.ERROR_MESSAGE);
 			}
@@ -2322,7 +2368,7 @@ public class Start extends Thread{
 			String pizzaListe = "<html>";
 			for (int j = 0; j < 9; j++) {
 				Product p = (Product)m2.getElementAt(j);
-				pizzaListe += "#" + p.getId() + " " + p.toString() + "<br>" + p.getDescription() + "<br><br>";
+				pizzaListe += "#" + p.getIdAsString() + " " + p.toString() + "<br>" + p.getDescription() + "<br><br>";
 			}
 			pizzaInfo.setText(pizzaListe + "</html>");
 		}catch(Exception eee){
@@ -2428,7 +2474,7 @@ public class Start extends Thread{
 			listModelProducts.clear();
 			for(int i = 0; i<m2.size(); i++){
 				Product pr = (Product)m2.getElementAt(i);
-				listModelProducts.addElement("#" + pr.getId() + " " + m2.getElementAt(i).toString());
+				listModelProducts.addElement(m2.getElementAt(i).toString());
 			}
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(null, "Fant ingen produkter i databasen", "Database",  JOptionPane.INFORMATION_MESSAGE);
@@ -2488,8 +2534,8 @@ public class Start extends Thread{
 	 */
 	private static boolean isPasswordCorrect(char[] input) {
 		boolean isCorrect = true;
-		char[] correctPassword = { 'p', 'a', 's', 's', 'o', 'r', 'd' };
-
+		char[] correctPassword = Config.PASSWORD.toCharArray();
+		
 		if (input.length != correctPassword.length) {
 		isCorrect = false;
 		} else {
@@ -2502,7 +2548,7 @@ public class Start extends Thread{
 		return isCorrect;
 		}
 	
-	private void exit(String s){
+	public static void exit(String s){
 		JOptionPane.showMessageDialog(null,  s, "Feil", JOptionPane.ERROR_MESSAGE);
 		System.exit(0);
 	}
