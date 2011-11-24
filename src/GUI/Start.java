@@ -754,6 +754,9 @@ public class Start extends Thread{
 			DatabaseConnector.initialize();			
 		}catch(Exception e){
 			exit("Klarte ikke å koble til databasen, vennligst kontroller config.json");
+			if(DEBUG){
+				e.printStackTrace();
+			}
 		}
 		getUsers();
 		getProducts();
@@ -1429,6 +1432,14 @@ public class Start extends Thread{
 						w = 0;
 					order.setKort(w);
 					temp=null;
+					navn.setText("");
+					nummer.setText("");
+					gatenavn.setText("");
+					postnummer.setText("");
+					poststed.setText("");
+					kommentar.setText("");
+					husnummer.setText("");
+					model.clear();
 					DatabaseConnector.newOrder(order);
 					getOrders();
 
@@ -1455,10 +1466,10 @@ public class Start extends Thread{
 						poststed.setText("");
 						kommentar.setText("");
 						husnummer.setText("");
+						model.clear();
 						chckbxLevering.setSelected(false);
 						rdbtnKort.setSelected(false);
 						rdbtnKontant.setSelected(false);
-						model.clear();
 						frame.repaint();
 					}catch(Exception j){
 						JOptionPane.showMessageDialog(null, "Klarte ikke lage ny bruker", "Send-Error",  JOptionPane.ERROR_MESSAGE);
