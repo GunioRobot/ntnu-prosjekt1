@@ -1,0 +1,66 @@
+<html>
+<h1>Ny bestilling</h1><p>
+Bestillingen starter i taben <b>Ny bestlling</b> lengst til venstre. N<&aring;r en kunde ringer 
+inn starter du her. <&oslash;verst til venstre p<&aring; her kan du se knapper merket med <b>Nr.#</b> 
+disse representerer pizzaene du kan se til i listen til h<&oslash;yre. Under finner du knapper 
+for drikke. Disse og pizzaene velger du enkelt flere av ved <&aring; trykke flere ganger, eller ved <&aring; bruke 
+nummerkanppene nederst p<&aring; venstre side. Disse fungerer slik at du trykker antallet 
+du skal ha, og s<&aring; trykker du p<&aring; drikken eller pizzaen. Hvis du har valgt feil kan du bruke 
+knappen merket med <b>C</b> for <&aring; slette. <p>
+<&Oslash;verst p<&aring; listen over produkter finner du knappene <b>Fjern</b> og <b>Fjern alt</b>. <b>Fjern</b> fjerner
+det elementet du har markert i lsten, og <b>Fjern alt</b> fjerner alt. <p>
+Etter at kunden har gitt sin <&oslash;nskede bestilling trykker du p<&aring; <b>Neste</b>. Da kommer du til 
+<b>Informasjon</b><br>
+<h1>Informasjon</h1><p>
+Her fylles kundens informasjon ut. Hvis det er en eksisterende kunde som ringer med et 
+registrert telefonnummer vil informasjonen v<&aelig;re fylt ut. I dette tilfellet er det viktig 
+<&aring; kontrollere om informasjonen er korrekt. Deretter velges betalingsm<&aring;te og eventuel levering.
+Hvis kunden har noen kommentar til kokken eller sj<&aring;f<&oslash;r s<&aring; skrives dette inn i <b>Kommentar</b> 
+feltet. <br>
+N<&aring;r orderen er klar trykker du p<&aring; <b>Send</b>.<br>
+<h1>Utg<&aring;ende</h1><p>
+P<&aring; <b>Utg<&aring;ende</b> siden vil du se en <b>Ikke ferdig</b> liste og en <b>Ferdig</b> liste. N<&aring;r en bestilling er 
+sendt vil den havne i <b>Ikke ferdig</b> listen og et kart som viser adressen til kunden vil 
+dukke opp. Hvis adressen som ble oppgitt ikke stemmer kan denne endres ved <&aring; trykke
+p<&aring; <b>Rediger adresse</b>.<br>
+N<&aring;r du trykker p<&aring; orderen vil du kunne se informasjon om den i ulike paneler. <&oslash;verst mellom 
+de to listene over ordre er det en liste over hva kunden har bestilt. Skulle orderen v<&aelig;re 
+feil eller kunden trekke den finnes det en <b>Slett</b> knapp rett under denne listen. Denne 
+knappen sletter orderen du har markert i listen. <br>
+Helt til h<&oslash;yre i vinduet kan du se kviteringen til orderen som er valgt.<br>
+N<&aring;r orderen er ferdig og klar til utkj<&oslash;ring dobbelklikker du p<&aring; den og den flyttes over
+til <b>Ferdig</b> listen. Ordrene i denne listen er klare for <&aring; bli levert til kunden. Hvis du 
+merker orderen og trykker p<&aring; <b>Vis kart</b> knappen vil kartet over kundens adresse vises.<br>
+N<&aring;r bestillingen er levert markerer du orderen og trykker p<&aring; <b>Levert</b>. <br>
+<h1>Rediger</h1><p>
+Redigerpanelet er til for <&aring; administrere kunder og retter. Den har to vinduer, <b>Kunder</b> og <b>Retter</b>.<br>
+<h2>Kunder<h2><p>
+Kunder hentes fra panelet til h<&oslash;yre ced <&aring; trykke p<&aring; dem. Informasjonen til kunden kan n<&aring; endres i de 
+ulike feltene og fullf<&oslash;res ved <&aring; trykke p<&aring; <b>Lagre</b>. En ny kunde kan ogs<&aring; opprettes ved <&aring; trykke 
+p<&aring; <b>Opprett</b> etter <&aring; ha fylt ut feltene. Knappen <b>Slett</b> sletter den markerte kunden i listen.<br>
+<h2>Retter<h2><p>
+Retter hentes fra panelet til h<&oslash;yre ced <&aring; trykke p<&aring; dem. Informasjonen til retten kan n<&aring; endres i de 
+ulike feltene og fullf<&oslash;res ved <&aring; trykke p<&aring; <b>Lagre</b>. En ny rett kan ogs<&aring; opprettes ved <&aring; trykke 
+p<&aring; <b>Opprett</b> etter <&aring; ha fylt ut feltene. Knappen <b>Slett</b> sletter den markerte retten i listen.<br>
+<h1>Menyknappene</h1><p>
+Siden du leser dette er det en stor sjense for at du har funnet menyknappene. Det finnes to menyknapper, 
+<b>Hjelp</b> og <b>Historikk</b>.<br>
+<h2>Hjelp<h2><br>
+<h3>Instruksjoner:</h3><br>
+Her finner du instruksjoner om hvordan <&aring; bruke programmet. Det finnes ogs<&aring; en brukermanual som f<&oslash;lger med 
+programmet i Dokumentermappen.<p>
+<h3>Om:</h3><br>
+Her finner kan du finne informasjon om programmet som f.eks hvilken versjon du kj<&oslash;rer.<p>
+<h2>Historikk</h2><br>
+<h3>Ordrehistorikk:</h3><p>
+Inne p<&aring; ordrehistorikk finner du ordrehistorikken til kudene. Vinduet best<&aring;r av 3 lister. Listen lengst til 
+venstre inneholder resturantens registrerte kunder. N<&aring;r en kunde markeres kan du se en liste over kundens 
+bestillinger i listen i midten. Disse bestillingene kan markeres og du kan se hva som ble bestilt.<br>
+Husk at du kan finne en brukermanual med bilder i Dokumenter/brukermanual_for_program.pdf.<p>
+</html>
+
+
+
+
+
+

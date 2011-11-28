@@ -783,7 +783,6 @@ public class Start extends Thread{
 		frame.setBounds((dim.width-width)/2, (dim.height-height)/2, width, height);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.addMouseListener(new MouseAdapter() {
 			@Override
