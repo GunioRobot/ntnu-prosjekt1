@@ -2280,10 +2280,7 @@ public class Start extends Thread{
 				JPasswordField pwd = new JPasswordField(10);
 				JOptionPane.showConfirmDialog(null, pwd, "Skriv inn passord", JOptionPane.OK_CANCEL_OPTION);
 				char[] c = pwd.getPassword();
-				if(JOptionPane.OK_CANCEL_OPTION == JOptionPane.CANCEL_OPTION){
-					//ikke gjør noe
-				}
-				else if(isPasswordCorrect(c)){
+				if(isPasswordCorrect(c)){
 					String s = JOptionPane.showInputDialog(null, "Skriv inn ny leveringspris");
 					DatabaseConnector.setDeliveryPrice(s);
 				}
@@ -2334,9 +2331,11 @@ public class Start extends Thread{
 		try{
 			getProducts();
 			String pizzaListe = "<html>";
-			for (int j = 0; j < 9; j++) {
+			for (int j = 0; j < m2.size(); j++) {
 				Product p = (Product)m2.getElementAt(j);
-				pizzaListe += "#" + p.getIdAsString() + " " + p.toString() + "<br>" + p.getDescription() + "<br><br>";
+				if(p.getNr() != 0){
+					pizzaListe += "#" + p.getNr() + " " + p.toString() + "<br>" + p.getDescription() + "<br><br>";					
+				}
 			}
 			pizzaInfo.setText(pizzaListe + "</html>");
 		}catch(Exception eee){

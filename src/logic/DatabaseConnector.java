@@ -236,7 +236,7 @@ public class DatabaseConnector{
 	 */
 	public static DefaultListModel getProducts() throws Exception{
 		DefaultListModel products = new DefaultListModel();
-		ResultSet products_rs = stmt.executeQuery("SELECT name, description, price, id, nr FROM products WHERE deleted = 0 ORDER BY name");
+		ResultSet products_rs = stmt.executeQuery("SELECT name, description, price, id, nr FROM products WHERE deleted = 0 ORDER BY nr");
 		products_rs.first();
 		do{
 			String name = products_rs.getString(1);
@@ -368,7 +368,7 @@ public class DatabaseConnector{
 	public static void newProduct(Product product){
 		try{
 			con.setAutoCommit(true);
-			stmt.executeUpdate("INSERT INTO products SET name='"+ product.getName() + "', description='" + product.getDescription() + "', price='" + product.getPrice() + "'");
+			stmt.executeUpdate("INSERT INTO products SET name='"+ product.getName() + "', description='" + product.getDescription() + "', price='" + product.getPrice() + "', nr='" + product.getNr() + "'");
 			con.setAutoCommit(false);
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(null, "Klarte ikke legge til nytt produkt i databasen", "SQL-feil",  JOptionPane.ERROR_MESSAGE);
