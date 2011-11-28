@@ -1,10 +1,21 @@
+
+HVIS DU ER KOBLET TIL EDUROAM KAN DU KJØRE PROGRAMMET UTEN Å SETTE OPP NOEN TING.
+
+Hvis du vil bruke eksisterende database må du sette opp vpn til eduroam:
+http://www.ntnu.no/itinfo/read_article.php?aid=722
+
+
+For å sette opp lokal database trengs steg 1-2-4
+
 Steg 1.
 Sett opp en MySQL-database og importert structure.sql
 
 Steg 2.
 Oppdater config.json med riktig informasjon
+adminPassword er passordet for å instillinger i programmet
 
 Steg 3.
+Dette steget er kun nødvendig dersom du skal kjøre programmet fra eclipse:
 importer biblioteker:
 - forms-1.3.0.jar
 - miglayouts15-swing.jar
