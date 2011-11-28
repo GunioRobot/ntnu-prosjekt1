@@ -59,6 +59,8 @@ import java.io.IOException;
 
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.Component;
 
 /**
  * Hovedklassen som kjører programmet
@@ -1483,6 +1485,7 @@ public class Start extends Thread{
 		});
 		btnNeste_1.setBounds(831, 555, 138, 68);
 		bestillingsInfo.add(btnNeste_1);
+		bestillingsInfo.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{navn, nummer, gatenavn, postnummer, poststed, kommentar, husnummer}));
 
 		//--------------------------Utgaaende/chef-----------------------------------------
 
@@ -2029,6 +2032,7 @@ public class Start extends Thread{
 		});
 		button_7.setBounds(510, 420, 110, 41);
 		kunder.add(button_7);
+		kunder.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{redigerNavn, redigerNummer, redigerAdresse, redigerHusNr, redigerPostNummer, redigerPostSted}));
 
 		JPanel retter = new JPanel();
 		retter.setBackground(new Color(255, 250, 250));
@@ -2201,6 +2205,7 @@ public class Start extends Thread{
 		lblPizzanummer.setFont(new Font("Verdana", Font.BOLD, 14));
 		lblPizzanummer.setBounds(450, 168, 159, 14);
 		retter.add(lblPizzanummer);
+		retter.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{retterNavn, retterPris, retterKommentar, pizzanr}));
 
 
 		//____COMBOBOX FOR ASSOSIATING DISHES TO BUTTONS
@@ -2325,6 +2330,7 @@ public class Start extends Thread{
 			}
 		});
 		mnHistorie.add(mntmOrdrehistorikk);
+		frame.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{navn, gatenavn, husnummer, postnummer, poststed, kommentar, redigerNavn, redigerNummer, redigerAdresse, redigerHusNr, redigerPostNummer, redigerPostSted, retterNavn, retterPris, retterKommentar}));
 //		frame.setUndecorated(true);
 	}
 	/**
