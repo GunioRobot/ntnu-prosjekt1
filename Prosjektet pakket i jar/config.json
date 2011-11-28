@@ -1,0 +1,10 @@
+{
+	"db": {
+		"host": "//mysql.stud.ntnu.no",
+		"username": "tordly",
+		"port": "3306",
+		"password": "tordly",
+		"name": "tordly_gjestebok"
+	},
+	"adminPassword": "passord"
+}
